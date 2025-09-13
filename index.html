@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A Calm & Cute Tribute</title>
+<style>
+  /* Reset and base styles */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0; padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f8e8ed, #fef8fb);
+    color: #4a2d3a;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem 1rem;
+    overflow-x: hidden;
+  }
+
+  /* Site wrapper */
+  #app {
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 14px 30px rgba(104, 56, 73, 0.25);
+    max-width: 900px;
+    width: 100%;
+    min-height: 750px;
+    padding: 3rem 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Navigation bar */
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 2.4rem;
+    margin-bottom: 3rem;
+  }
+  nav button {
+    all: unset;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1.15rem;
+    padding: 0.5rem 1.4rem;
+    border-radius: 32px;
+    border: 2px solid #c589a9;
+    color: #a85c80;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+    outline-offset: 3px;
+  }
+  nav button:hover,
+  nav button:focus {
+    background-color: #ac6380;
+    color: white;
+    outline: none;
+    box-shadow: 0 6px 16px rgba(172, 99, 128, 0.7);
+  }
+  nav button.active {
+    background-color: #9c5d77;
+    color: white;
+    cursor: default;
+    box-shadow: 0 8px 20px rgba(156, 93, 119, 0.8);
+  }
+
+  /* Page styling: absolute positioning for multi-page SPA effect */
+  section.page {
+    position: absolute;
+    top: 6.5rem;
+    left: 0; right: 0; bottom: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    overflow-y: auto;
+    max-height: calc(100% - 7rem);
+  }
+  section.page.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+  }
+
+  /* Headings */
+  h1, h2, h3 {
+    font-family: 'Georgia', serif;
+    color: #6a425c;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    letter-spacing: 0.06em;
+  }
+  h1 {
+    font-size: 2.7rem;
+    text-align: center;
+  }
+  h2 {
+    font-size: 2.1rem;
+  }
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Paragraphs */
+  p {
+    color: #6d4a62;
+    font-size: 1.15rem;
+    line-height: 1.65;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.8rem;
+  }
+
+  /* Heart Icon Decoration */
+  .heart-icon {
+    font-size: 5rem;
+    color: #bf758f;
+    user-select: none;
+    display: block;
+    margin: 1rem auto 2rem auto;
+    animation: heartPulse 2.2s infinite ease-in-out;
+  }
+  @keyframes heartPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  /* Interactive Buttons */
+  .btn-primary {
+    background-color: #a25c7a;
+    border: none;
+    border-radius: 32px;
+    color: white;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 8px 22px rgba(162, 92, 122, 0.45);
+    user-select: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+  }
+  .btn-primary:hover,
+  .btn-primary:focus {
+    background-color: #833f64;
+    outline: none;
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(131, 63, 100, 0.65);
+  }
+  .btn-primary:active {
+    transform: translateY(-2px);
+  }
+
+  /* Message Reveal text */
+  .message-reveal {
+    margin-top: 1.2rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #793d5f;
+    min-height: 2.5rem;
+    text-align: center;
+    transition: opacity 0.4s ease;
+  }
+
+  /* Layout for thoughts page: grid */
+  .thoughts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.9rem;
+    margin-top: 1rem;
+  }
+  .thought-box {
+    background: #fbeef4;
+    border-radius: 22px;
+    padding: 1.7rem 2rem;
+    box-shadow: inset 0 0 16px #e2b7cf;
+    color: #824a6e;
+    font-weight: 500;
+    font-size: 1rem;
+    text-align: center;
+    user-select: none;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: default;
+  }
+  .thought-box:hover,
+  .thought-box:focus {
+    outline: none;
+    transform: translateY(-7px);
+    box-shadow: 0 10px 28px rgba(130, 74, 110, 0.5);
+  }
+
+  /* Layout for story page */
+  .story-line {
+    border-left: 4px solid #b973a3;
+    padding-left: 1.8rem;
+    margin-top: 1rem;
+  }
+  .story-event {
+    position: relative;
+    margin-bottom: 3rem;
+  }
+  .story-event:last-child {
+    margin-bottom: 0;
+  }
+  .story-circle {
+    position: absolute;
+    left: -12px;
+    top: 8px;
+    width: 20px;
+    height: 20px;
+    background: #a55883;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(165, 88, 131, 0.6);
+  }
+  .story-date {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #8a5174;
+    margin-bottom: 0.3rem;
+  }
+  .story-text {
+    color: #72425b;
+    font-size: 1.1rem;
+    line-height: 1.53;
+  }
+
+  /* Animations for pages fade & slide */
+  .fade-slide-in {
+    animation: fadeSlideIn 0.7s ease forwards;
+  }
+  @keyframes fadeSlideIn {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Quote rotator */
+  .quote-box {
+    background: #f7e7ee;
+    border-radius: 15px;
+    padding: 2rem 3rem;
+    box-shadow: inset 0 0 15px #deb7cb;
+    max-width: 700px;
+    font-style: italic;
+    color: #7b4969;
+    font-size: 1.25rem;
+    text-align: center;
+    position: relative;
+    user-select: none;
+    margin: 2rem auto 3rem auto;
+  }
+  .quote-author {
+    margin-top: 1.8rem;
+    color: #a86a8a;
+    font-weight: 700;
+    font-size: 1rem;
+    text-align: right;
+  }
+  .quote-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+    margin-top: -1rem;
+  }
+  .qc-btn {
+    border: none;
+    background: #b27da1;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 7px rgba(178, 125, 161, 0.7);
+    transition: background 0.3s ease;
+  }
+  .qc-btn:hover,
+  .qc-btn:focus {
+    background: #8c587a;
+    outline: none;
+  }
+  .qc-btn.active {
+    background: #855573;
+    box-shadow: 0 0 15px #855573;
+  }
+</style>
+</head>
+<body>
+<div id="app" role="main" aria-label="Calm and cute love themed tribute website">
+
+<!-- Navigation buttons -->
+<nav role="navigation" aria-label="Main site navigation">
+  <button class="active" data-target="page1" aria-current="page" aria-controls="page1">Welcome</button>
+  <button data-target="page2" aria-controls="page2">Thoughts</button>
+  <button data-target="page3" aria-controls="page3">Story</button>
+  <button data-target="page4" aria-controls="page4">Reflections</button>
+</nav>
+
+<!-- Page 1: Welcome -->
+<section id="page1" class="page active" tabindex="0" aria-label="Welcome page with gentle message">
+  <h1>Welcome</h1>
+  <div class="heart-icon" aria-hidden="true">&#10084;</div>
+  <p>
+    This space is created quietly for someone special — an appreciation expressed with calm, with care, and sincerity.
+  </p>
+  <p>
+    No grand declarations, only thoughtful moments and gentle reflections.
+  </p>
+  <button class="btn-primary" id="revealMsgBtn" aria-label="Reveal a thoughtful message">
+    Reveal a Thoughtful Message
+  </button>
+  <div id="welcomeMsg" class="message-reveal" aria-live="polite" aria-atomic="true"></div>
+</section>
+
+<!-- Page 2: Thoughts -->
+<section id="page2" class="page" tabindex="0" aria-label="Collection of thoughtful notes">
+  <h2>Thoughts</h2>
+  <div class="thoughts-grid" role="list" aria-label="Collection of kind thoughts">
+    <div class="thought-box" role="listitem" tabindex="0" aria-label="Thought 1: Calming presence">
+      A calming presence that gently steadies every day.
+    </div>
+    <div class="thought-box" role="listitem" tabindex="0" aria-label="Thought 2: Quiet strength">
+      Quiet strength that never seeks attention but always commands respect.
+    </div>
+    <div class="thought-box" role="listitem" tabindex="0" aria-label="Thought 3: Thoughtfulness">
+      Thoughtfulness expressed in subtle ways that do not go unnoticed.
+    </div>
+    <div class="thought-box" role="listitem" tabindex="0" aria-label="Thought 4: Genuine kindness">
+      Genuine kindness, felt deeply by those fortunate enough to know it.
+    </div>
+    <div class="thought-box" role="listitem" tabindex="0" aria-label="Thought 5: Patient listener">
+      Patient listening — an increasingly rare and beautiful gift.
+    </div>
+    <div class="thought-box" role="listitem" tabindex="0" aria-label="Thought 6: Inspiring grace">
+      Inspiring grace that illuminates without dazzling.
+    </div>
+  </div>
+</section>
+
+<!-- Page 3: Story -->
+<section id="page3" class="page" tabindex="0" aria-label="A gentle story timeline">
+  <h2>Our Story</h2>
+  <div class="story-line" role="list" aria-label="Timeline of moments">
+    <div class="story-event" role="listitem" tabindex="0">
+      <div class="story-circle" aria-hidden="true"></div>
+      <div class="story-date">A quiet hello</div>
+      <div class="story-text">The first glance that brought a spark of curiosity and quiet warmth.</div>
+    </div>
+    <div class="story-event" role="listitem" tabindex="0">
+      <div class="story-circle"></div>
+      <div class="story-date">Small moments</div>
+      <div class="story-text">Shared smiles and unspoken understanding that spoke for itself.</div>
+    </div>
+    <div class="story-event" role="listitem" tabindex="0">
+      <div class="story-circle"></div>
+      <div class="story-date">Growing respect</div>
+      <div class="story-text">A steady bond formed through kindness and calm support.</div>
+    </div>
+    <div class="story-event" role="listitem" tabindex="0">
+      <div class="story-circle"></div>
+      <div class="story-date">Quiet confidence</div>
+      <div class="story-text">Admiration for the strength found in quiet grace.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Page 4: Reflections -->
+<section id="page4" class="page" tabindex="0" aria-label="Rotating reflections and quotes">
+  <h2>Reflections</h2>
+  <div class="quote-box" id="quoteBox" aria-live="polite" aria-atomic="true">
+    <div id="quoteText">“Gentle souls leave the most lasting echoes.”</div>
+    <div class="quote-author">— Anonymous</div>
+  </div>
+  <div class="quote-controls" role="tablist" aria-label="Quote navigation">
+    <button class="qc-btn active" aria-label="Select quote 1" role="tab" tabindex="0"></button>
+    <button class="qc-btn" aria-label="Select quote 2" role="tab" tabindex="-1"></button>
+    <button class="qc-btn" aria-label="Select quote 3" role="tab" tabindex="-1"></button>
+    <button class="qc-btn" aria-label="Select quote 4" role="tab" tabindex="-1"></button>
+  </div>
+</section>
+
+</div>
+
+<script>
+  // Navigation: Show / Hide pages, update button states
+  (() => {
+    const navButtons = document.querySelectorAll('nav button');
+    const pages = document.querySelectorAll('section.page');
+
+    function setActivePage(id) {
+      pages.forEach(page => {
+        if(page.id === id) {
+          page.classList.add('active');
+          page.setAttribute('tabindex', '0');
+          page.classList.add('fade-slide-in');
+        } else {
+          page.classList.remove('active');
+          page.setAttribute('tabindex', '-1');
+          page.classList.remove('fade-slide-in');
+        }
+      });
+
+      navButtons.forEach(btn => {
+        if(btn.dataset.target === id) {
+          btn.classList.add('active');
+          btn.setAttribute('aria-current', 'page');
+          btn.setAttribute('tabindex', '0');
+          btn.focus();
+        } else {
+          btn.classList.remove('active');
+          btn.removeAttribute('aria-current');
+          btn.setAttribute('tabindex', '-1');
+        }
+      });
+    }
+
+    navButtons.forEach(btn =>
+      btn.addEventListener('click', () => setActivePage(btn.dataset.target))
+    );
+
+    // Initialize to first page
+    setActivePage('page1');
+  })();
+
+  // Reveal thoughtful message on Welcome page
+  (() => {
+    const btn = document.getElementById('revealMsgBtn');
+    const msg = document.getElementById('welcomeMsg');
+    const thoughts = [
+      "You radiate a calm confidence that's quietly inspiring.",
+      "Your natural grace lends warmth to everyone around.",
+      "There’s a gentle strength in your presence that speaks loudly.",
+      "In simple moments, your kindness shines brightest.",
+      "Quiet sincerity like yours is the rarest beauty."
+    ];
+
+    btn.addEventListener('click', () => {
+      // Fade out old message
+      msg.style.opacity = '0';
+      setTimeout(() => {
+        const randomIndex = Math.floor(Math.random() * thoughts.length);
+        msg.textContent = thoughts[randomIndex];
+        msg.style.opacity = '1';
+      }, 350);
+
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.disabled = false;
+      }, 5000);
+    });
+  })();
+
+  // Quote rotator for Reflections page
+  (() => {
+    const quotes = [
+      { text: "Gentle souls leave the most lasting echoes.", author: "Anonymous" },
+      { text: "True beauty lies in quiet moments shared.", author: "Unknown" },
+      { text: "Kindness is a language the deaf can hear and the blind can see.", author: "Mark Twain" },
+      { text: "In calmness there is strength, in softness there is power.", author: "Unknown" }
+    ];
+
+    const quoteBox = document.getElementById('quoteBox');
+    const quoteText = document.getElementById('quoteText');
+    const authorText = quoteBox.querySelector('.quote-author');
+    const buttons = document.querySelectorAll('.qc-btn');
+    let current = 0;
+
+    function showQuote(index) {
+      const { text, author } = quotes[index];
+      quoteText.textContent = `“${text}”`;
+      authorText.textContent = `— ${author}`;
+      buttons.forEach((btn, i) => {
+        btn.classList.toggle('active', i === index);
+        btn.setAttribute('aria-selected', i === index);
+        btn.setAttribute('tabindex', i === index ? '0' : '-1');
+      });
+      current = index;
+    }
+
+    buttons.forEach((btn, i) => {
+      btn.addEventListener('click', () => showQuote(i));
+      btn.addEventListener('keydown', e => {
+        if(e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          showQuote((current + 1) % quotes.length);
+          buttons[(current + 1) % quotes.length].focus();
+        } else if(e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          showQuote((current - 1 + quotes.length) % quotes.length);
+          buttons[(current - 1 + quotes.length) % quotes.length].focus();
+        }
+      });
+    });
+
+    // Initialize
+    showQuote(0);
+  })();
+</script>
+</body>
+</html>
