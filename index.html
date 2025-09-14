@@ -1,120 +1,337 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Love Proposal</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Love Confessions & Surprises</title>
   <style>
+    /* Root colors */
+    :root {
+      --skyblue-dark: #0b3d91;
+      --pink-lightdark: #db9ca2;
+      --pink-accent: #f2c1d1;
+      --text-light: #f9f9f9;
+      --bg-gradient: linear-gradient(135deg, var(--skyblue-dark), #2e58a3);
+    }
+
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: linear-gradient(135deg, #7fdaf9 0%, #f4b6ec 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-light);
       min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
     }
-    .container {
-      max-width: 500px;
-      margin: 60px auto;
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 24px;
-      box-shadow: 0 8px 32px rgba(110, 59, 136, 0.25);
-      padding: 32px;
-      text-align: center;
+    main {
+      max-width: 900px;
+      width: 100%;
+      background: rgba(255 255 255 / 0.07);
+      border-radius: 20px;
+      box-shadow: 0 0 10px rgba(219,156,162,0.5);
+      overflow: hidden;
     }
-    header h1 {
-      color: #4a90e2;
-      font-size: 2.2rem;
-      margin-bottom: 8px;
-    }
-    header p {
-      color: #ed5cae;
-      font-size: 1.1rem;
-      margin-bottom: 24px;
-    }
-    .heart {
-      width: 90px;
-      margin: 24px 0;
-      transition: transform 0.5s;
-    }
-    .proposal-btns {
-      margin: 24px 0;
-    }
-    button {
-      background: linear-gradient(90deg, #79bbff, #f181df);
-      color: #fff;
-      border: none;
-      border-radius: 32px;
-      padding: 13px 40px;
-      font-size: 1.15rem;
-      margin: 0 12px;
-      cursor: pointer;
-      outline: none;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    button:hover {
-      transform: scale(1.09);
-      box-shadow: 0 0 15px #ed5cae55;
-    }
-    #response {
-      margin-top: 24px;
-      font-size: 1.3rem;
+    h1, h2 {
       font-weight: 600;
-      color: #156ac2;
-      min-height: 36px;
     }
-    /* Confetti styling */
-    .confetti {
+    h1 {
+      font-size: 2.8rem;
+      margin: 0;
+      padding: 25px;
+      text-align: center;
+      letter-spacing: 2px;
+      color: var(--pink-lightdark);
+      text-shadow: 0 0 10px var(--pink-accent);
+      background: rgba(11, 61, 145, 0.85);
+    }
+
+    /* Navigation tabs */
+    nav {
+      display: flex;
+      justify-content: center;
+      background: rgba(219,156,162,0.2);
+      padding: 15px 0;
+      border-bottom: 2px solid var(--pink-lightdark);
+    }
+    nav button {
+      background: transparent;
+      border: none;
+      padding: 10px 30px;
+      font-size: 1.1rem;
+      color: var(--text-light);
+      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      border-radius: 30px;
+      margin: 0 10px;
+    }
+    nav button:hover, nav button.active {
+      background: var(--pink-lightdark);
+      color: var(--skyblue-dark);
+      box-shadow: 0 0 10px var(--pink-accent);
+    }
+
+    /* Section for confessions */
+    section {
+      padding: 30px 40px;
+      min-height: 400px;
+      color: var(--text-light);
+    }
+    .confession {
+      margin-bottom: 25px;
+      background: rgba(219,156,162,0.3);
+      border-radius: 10px;
+      padding: 15px 25px;
+      font-size: 1.25rem;
+      font-style: italic;
+      line-height: 1.5;
+      box-shadow: inset 0 0 12px #f2c1d199;
+      position: relative;
+      transition: transform 0.2s ease;
+      cursor: default;
+    }
+    .confession:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 6px 15px var(--pink-accent);
+    }
+    .author {
+      font-weight: 700;
+      font-style: normal;
+      margin-top: 10px;
+      text-align: right;
+      font-size: 1rem;
+      color: var(--pink-lightdark);
+    }
+
+    /* Surprise confession section */
+    .surprise-box {
+      background: rgba(11, 61, 145, 0.7);
+      padding: 25px;
+      margin: 30px auto;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 0 25px var(--pink-accent);
+      user-select: none;
+      cursor: pointer;
+      max-width: 400px;
+      transition: background 0.5s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .surprise-box:hover {
+      background: var(--pink-lightdark);
+      color: var(--skyblue-dark);
+    }
+    .surprise-box span {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+    }
+
+    /* Surprise message hidden by default */
+    .surprise-message {
+      display: none;
+      font-size: 1.3rem;
+      margin-top: 20px;
+      color: var(--skyblue-dark);
+      padding: 15px;
+      background: var(--pink-accent);
+      border-radius: 14px;
+      box-shadow: 0 0 15px #d18a9f;
+      animation: fadeIn 1s ease forwards;
+    }
+    .surprise-open .surprise-message {
+      display: block;
+    }
+
+    /* Confetti container */
+    #confetti-container {
+      pointer-events: none;
       position: fixed;
-      top: 0;
-      width: 12px;
-      height: 12px;
-      border-radius:50%;
-      opacity: 0.85;
-      will-change: transform;
-      animation: fall 1.7s cubic-bezier(.7,.6,0,1.2) forwards;
-      z-index: 10;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      overflow: visible;
+      z-index: 9999;
+      user-select: none;
+      display: none;
     }
+
+    .confetti-piece {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: var(--pink-lightdark);
+      opacity: 0.9;
+      animation: fall 2.5s linear forwards;
+      border-radius: 3px;
+    }
+
     @keyframes fall {
-      to { transform: translateY(100vh) scale(1.5) rotate(360deg); opacity: 0.5;}
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        filter: drop-shadow(0 0 2px var(--pink-lightdark));
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      nav button {
+        padding: 8px 16px;
+        font-size: 1rem;
+        margin: 0 6px;
+      }
+      section {
+        padding: 20px 20px;
+        font-size: 1.1rem;
+      }
+      .confession {
+        font-size: 1.1rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Will You Be My Valentine?</h1>
-      <p>To: My Special Person 💖</p>
-    </header>
-    <main>
-      <img src="https://cdn.pixabay.com/photo/2017/01/06/19/15/heart-1951146_960_720.png" alt="love heart" class="heart"/>
-      <div class="proposal-btns">
-        <button id="yes-btn">Yes 💕</button>
-        <button id="no-btn">No 😢</button>
-      </div>
-      <div id="response"></div>
-    </main>
-  </div>
-  <script>
-    document.getElementById('yes-btn').onclick = function() {
-      document.getElementById('response').innerHTML = "Yay! 💙💗 I'm the happiest!";
-      document.querySelector('.heart').style.transform = "scale(1.2) rotate(-15deg)";
-      // Add a celebratory effect
-      for(let i=0; i<30; i++){
-        let conf = document.createElement('div');
-        conf.className = 'confetti';
-        conf.style.left = (Math.random() * 100) + '%';
-        conf.style.background = Math.random()>0.5 ? '#7fdaf9' : '#ed5cae';
-        conf.style.animationDelay = (Math.random()*1)+'s';
-        document.body.appendChild(conf);
-        setTimeout(()=>conf.remove(),2000);
-      }
-    };
+  <main>
+    <h1>Love Confessions & Surprises</h1>
+    <nav>
+      <button class="nav-btn active" data-target="layout1">Confessions One</button>
+      <button class="nav-btn" data-target="layout2">Confessions Two</button>
+      <button class="nav-btn" data-target="surprise">Surprise Box</button>
+    </nav>
 
-    document.getElementById('no-btn').onclick = function() {
-      document.getElementById('response').innerHTML = "Oh no... 😢 But I'll always care!";
-      document.querySelector('.heart').style.transform = "scale(1) rotate(0deg)";
-    };
+    <!-- Layout 1 -->
+    <section id="layout1" class="layout active">
+      <div class="confession">
+        "Every time I see your smile, my heart skips a beat."
+        <div class="author">- Your Secret Admirer</div>
+      </div>
+      <div class="confession">
+        "I love the way you light up every room you enter."
+        <div class="author">- From the Shadows</div>
+      </div>
+      <div class="confession">
+        "With you, life feels like a beautiful dream I never want to wake from."
+        <div class="author">- Yours Forever</div>
+      </div>
+    </section>
+
+    <!-- Layout 2 -->
+    <section id="layout2" class="layout">
+      <div class="confession">
+        "If loving you is a sin, I never want to be forgiven."
+        <div class="author">- Your Devoted</div>
+      </div>
+      <div class="confession">
+        "You’re my first thought when I wake and my last before I sleep."
+        <div class="author">- Always Thinking</div>
+      </div>
+      <div class="confession">
+        "I collected moments of you in my heart like precious jewels."
+        <div class="author">- Treasure Keeper</div>
+      </div>
+    </section>
+
+    <!-- Surprise Confession Box -->
+    <section id="surprise" class="layout">
+      <div class="surprise-box" id="surpriseBox">
+        <span>Click for a Surprise Confession 💌</span>
+        <div class="surprise-message" id="surpriseMessage">I was nervous to tell you, but I think I'm totally in love with you. Will you be mine forever?</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Confetti Container -->
+  <div id="confetti-container"></div>
+
+  <script>
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const layouts = document.querySelectorAll('.layout');
+    const surpriseBox = document.getElementById('surpriseBox');
+    const surpriseMessage = document.getElementById('surpriseMessage');
+    const confettiContainer = document.getElementById('confetti-container');
+
+    // Navigation Logic
+    navButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        navButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const target = btn.getAttribute('data-target');
+        layouts.forEach(layout => {
+          layout.classList.toggle('active', layout.id === target);
+        });
+      });
+    });
+
+    // Surprise Confession Toggle & Effects
+    surpriseBox.addEventListener('click', () => {
+      if(surpriseBox.classList.contains('surprise-open')){
+        surpriseBox.classList.remove('surprise-open');
+        stopConfetti();
+      } else {
+        surpriseBox.classList.add('surprise-open');
+        startConfetti();
+        playSparkles();
+      }
+    });
+
+    // Confetti effect creation
+    function startConfetti(){
+      confettiContainer.style.display = 'block';
+      for(let i=0; i<100; i++){
+        const piece = document.createElement('div');
+        piece.classList.add('confetti-piece');
+        piece.style.left = Math.random() * 100 + 'vw';
+        piece.style.background = Math.random() > 0.5 ? 'var(--pink-lightdark)' : 'var(--text-light)';
+        piece.style.animationDuration = (Math.random() * 1 + 1.5) + 's';
+        piece.style.animationDelay = (Math.random() * 1) + 's';
+        confettiContainer.appendChild(piece);
+      }
+      // Clean confetti after 3 seconds
+      setTimeout(() => {
+        while(confettiContainer.firstChild) {
+          confettiContainer.removeChild(confettiContainer.firstChild);
+        }
+        confettiContainer.style.display = 'none';
+      }, 3000);
+    }
+    function stopConfetti(){
+      while(confettiContainer.firstChild) {
+        confettiContainer.removeChild(confettiContainer.firstChild);
+      }
+      confettiContainer.style.display = 'none';
+    }
+
+    // Sparkle effect on surprise message (text glow animation)
+    function playSparkles(){
+      const message = surpriseMessage;
+      let intensity = 0;
+      const sparkleInterval = setInterval(() => {
+        intensity = intensity === 0 ? 1 : 0;
+        message.style.textShadow = intensity ? '0 0 10px var(--pink-accent), 0 0 20px var(--pink-accent)' : 'none';
+      }, 500);
+
+      // Stop sparkle after 3 seconds
+      setTimeout(() => {
+        clearInterval(sparkleInterval);
+        message.style.textShadow = 'none';
+      }, 3000);
+    }
   </script>
 </body>
 </html>
+
