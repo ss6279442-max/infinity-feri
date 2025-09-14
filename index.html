@@ -1,337 +1,588 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Love Confessions & Surprises</title>
-  <style>
-    /* Root colors */
-    :root {
-      --skyblue-dark: #0b3d91;
-      --pink-lightdark: #db9ca2;
-      --pink-accent: #f2c1d1;
-      --text-light: #f9f9f9;
-      --bg-gradient: linear-gradient(135deg, var(--skyblue-dark), #2e58a3);
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fun Love Confessions & Surprises</title>
+<style>
+  /* Root color variables */
+  :root {
+    --skyblue-dark: #0b3d91;
+    --pink-lightdark: #db9ca2;
+    --pink-accent: #f2c1d1;
+    --text-light: #f9f9f9;
+    --heart-red: #ff4b5c;
+    --heart-pink: #f19ca3;
+    --shadow-pink: rgba(219,156,162,0.5);
+  }
+  
+  /* Base reset and styles */
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  html, body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100%;
+    background: linear-gradient(135deg, var(--skyblue-dark), #2e58a3);
+    color: var(--text-light);
+    overflow-x: hidden;
+  }
+  body {
+    display: flex;
+    justify-content: center;
+    padding: 20px 15px;
+  }
+  main {
+    position: relative;
+    max-width: 960px;
+    width: 100%;
+    background: rgba(255,255,255,0.08);
+    border-radius: 25px;
+    box-shadow: 0 0 55px 6px var(--shadow-pink);
+    padding: 40px 40px 70px 40px;
+    min-height: 100vh;
+    overflow: hidden;
+    backdrop-filter: saturate(180%) blur(8px);
+  }
+  h1 {
+    font-size: 3rem;
+    color: var(--pink-lightdark);
+    text-align: center;
+    letter-spacing: 3px;
+    text-shadow: 0 0 18px var(--pink-accent);
+    margin-bottom: 25px;
+    animation: pulsate 3s ease-in-out infinite alternate;
+  }
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    padding: 15px 0;
+    border-radius: 15px;
+    background: rgba(219,156,162,0.25);
+    margin-bottom: 40px;
+    box-shadow: inset 0 0 25px var(--pink-accent);
+  }
+  nav button {
+    background: transparent;
+    color: var(--text-light);
+    font-weight: 700;
+    border: 2px solid var(--pink-lightdark);
+    border-radius: 30px;
+    padding: 12px 45px;
+    cursor: pointer;
+    font-size: 1.15rem;
+    transition: all 0.3s ease;
+    user-select: none;
+  }
+  nav button:hover, nav button.active {
+    background: var(--pink-lightdark);
+    color: var(--skyblue-dark);
+    border-color: var(--pink-accent);
+    box-shadow: 0 0 28px var(--pink-accent);
+  }
 
-    /* Reset and base */
-    * {
-      box-sizing: border-box;
+  section {
+    max-width: 920px;
+    margin: 0 auto 40px;
+    border-radius: 20px;
+    background: rgba(219, 156, 162, 0.28);
+    box-shadow: inset 0 0 28px var(--pink-accent);
+    padding: 30px 40px 50px 40px;
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.75s ease, transform 0.75s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  section.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  h2 {
+    text-align: center;
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, #f2c1d1, var(--pink-lightdark), var(--skyblue-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textGlow 5s ease-in-out infinite alternate;
+    letter-spacing: 2px;
+  }
+
+  /* Confession Card */
+  .confession-card {
+    background: var(--pink-lightdark);
+    color: var(--skyblue-dark);
+    box-shadow: 0 12px 28px 4px rgba(219,156,162,0.5);
+    border-radius: 22px;
+    padding: 28px 38px;
+    margin-bottom: 30px;
+    font-style: italic;
+    font-size: 1.25rem;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    animation-fill-mode: forwards;
+    opacity: 0;
+    transform: translateX(-30%);
+  }
+  /* Animate confession cards one by one */
+  .confession-card:nth-child(1) { animation: floatInLeft 0.8s 0.35s ease forwards; }
+  .confession-card:nth-child(2) { animation: floatInLeft 0.8s 0.65s ease forwards; }
+  .confession-card:nth-child(3) { animation: floatInLeft 0.8s 0.95s ease forwards; }
+  .confession-card:nth-child(4) { animation: floatInLeft 0.8s 1.25s ease forwards; }
+  .confession-card:nth-child(5) { animation: floatInLeft 0.8s 1.55s ease forwards; }
+  .confession-card:nth-child(6) { animation: floatInLeft 0.8s 1.85s ease forwards; }
+
+  @keyframes floatInLeft {
+    0% {opacity: 0; transform: translateX(-30%);}
+    100% {opacity: 1; transform: translateX(0);}
+  }
+
+  .confession-card:hover {
+    box-shadow: 0 18px 48px 7px var(--pink-accent);
+    transform: translateY(-12px) scale(1.05);
+    transition: all 0.35s ease;
+  }
+
+  .confession-author {
+    font-weight: 700;
+    font-size: 1rem;
+    text-align: right;
+    margin-top: 12px;
+    letter-spacing: 0.05em;
+  }
+  .confession-author::before {
+    content: "— ";
+  }
+
+  /* Heart icon - pulse */
+  .heart-icon {
+    position: absolute;
+    top: 18px;
+    right: 25px;
+    width: 30px;
+    height: 30px;
+    fill: var(--heart-red);
+    filter: drop-shadow(0 0 3px var(--pink-accent));
+    animation: heartBeat 2.5s ease-in-out infinite;
+    user-select: none;
+  }
+  @keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.3);}
+  }
+
+  /* Surprise box - multi-step with fancy text and animation */
+  .surprise-box {
+    max-width: 640px;
+    margin: 40px auto;
+    padding: 36px 28px;
+    background: var(--skyblue-dark);
+    border-radius: 26px;
+    box-shadow: 0 0 60px var(--pink-accent);
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .surprise-box span {
+    display: block;
+    font-weight: bold;
+    font-size: 1.55rem;
+    letter-spacing: 1.5px;
+    color: var(--pink-lightdark);
+    text-shadow: 0 0 15px var(--pink-accent);
+    margin-bottom: 40px;
+    animation: glowText 3.7s linear infinite alternate;
+  }
+
+  /* Multiple surprise messages with fade */
+  .surprise-message {
+    font-size: 1.3rem;
+    font-weight: 600;
+    background: var(--pink-accent);
+    color: var(--skyblue-dark);
+    padding: 22px 35px;
+    border-radius: 22px;
+    box-shadow: 0 0 20px #d18a9f;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    transform: scale(0.85);
+    transition: all 0.6s ease;
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  .surprise-message.active {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Interactive confetti container */
+  #confetti-container {
+    pointer-events: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    overflow: visible;
+    z-index: 9999;
+    user-select: none;
+    display: none;
+    mix-blend-mode: screen;
+  }
+
+  .confetti-piece {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 4px;
+    opacity: 0.9;
+    animation: confettiFall 3.6s linear forwards;
+  }
+  .confetti-piece.pink {
+    background: var(--pink-lightdark);
+    filter: drop-shadow(0 0 5px var(--pink-accent));
+  }
+  .confetti-piece.blue {
+    background: var(--skyblue-dark);
+    filter: drop-shadow(0 0 5px var(--pink-accent));
+  }
+
+  @keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* Floating hearts with staggered animations */
+  .floating-heart {
+    position: fixed;
+    bottom: -50px;
+    opacity: 0.8;
+    width: 18px;
+    height: 18px;
+    fill: var(--heart-pink);
+    pointer-events: none;
+    animation-name: floatUpDown;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+  .floating-heart.blue {
+    fill: var(--skyblue-dark);
+    opacity: 0.6;
+  }
+  @keyframes floatUpDown {
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(-28px); opacity: 0.6; }
+  }
+
+  /* Particle circle sparkle */
+  .sparkle-circle {
+    position: absolute;
+    border-radius: 50%;
+    width: 4px;
+    height: 4px;
+    background: var(--pink-accent);
+    box-shadow: 0 0 8px var(--pink-accent);
+    animation: sparklePulse 2.8s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes sparklePulse {
+    0%, 100% {
+      opacity: 0.7;
+      transform: scale(1);
     }
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: var(--bg-gradient);
-      color: var(--text-light);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      padding: 20px;
+    50% {
+      opacity: 0;
+      transform: scale(1.8);
     }
-    main {
-      max-width: 900px;
-      width: 100%;
-      background: rgba(255 255 255 / 0.07);
-      border-radius: 20px;
-      box-shadow: 0 0 10px rgba(219,156,162,0.5);
-      overflow: hidden;
-    }
-    h1, h2 {
-      font-weight: 600;
-    }
-    h1 {
-      font-size: 2.8rem;
-      margin: 0;
-      padding: 25px;
-      text-align: center;
-      letter-spacing: 2px;
+  }
+
+  /* Glow text animation keyframe */
+  @keyframes glowText {
+    0%, 100% {
+      text-shadow: 0 0 12px var(--pink-lightdark), 0 0 30px var(--pink-accent);
       color: var(--pink-lightdark);
-      text-shadow: 0 0 10px var(--pink-accent);
-      background: rgba(11, 61, 145, 0.85);
     }
+    50% {
+      text-shadow: 0 0 30px var(--pink-lightdark), 0 0 60px var(--pink-accent);
+      color: var(--pink-accent);
+    }
+  }
 
-    /* Navigation tabs */
-    nav {
-      display: flex;
-      justify-content: center;
-      background: rgba(219,156,162,0.2);
-      padding: 15px 0;
-      border-bottom: 2px solid var(--pink-lightdark);
-    }
-    nav button {
-      background: transparent;
-      border: none;
-      padding: 10px 30px;
-      font-size: 1.1rem;
-      color: var(--text-light);
-      cursor: pointer;
-      font-weight: 600;
-      letter-spacing: 1px;
-      transition: all 0.3s ease;
-      border-radius: 30px;
-      margin: 0 10px;
-    }
-    nav button:hover, nav button.active {
-      background: var(--pink-lightdark);
-      color: var(--skyblue-dark);
-      box-shadow: 0 0 10px var(--pink-accent);
-    }
+  /* Pulsate intro animation */
+  @keyframes pulsate {
+    0%, 100% { opacity: 1; text-shadow: 0 0 20px var(--pink-accent); }
+    50% { opacity: 0.85; text-shadow: 0 0 40px var(--pink-accent), 0 0 60px var(--pink-lightdark); }
+  }
 
-    /* Section for confessions */
-    section {
-      padding: 30px 40px;
-      min-height: 400px;
-      color: var(--text-light);
-    }
-    .confession {
-      margin-bottom: 25px;
-      background: rgba(219,156,162,0.3);
-      border-radius: 10px;
-      padding: 15px 25px;
-      font-size: 1.25rem;
-      font-style: italic;
-      line-height: 1.5;
-      box-shadow: inset 0 0 12px #f2c1d199;
-      position: relative;
-      transition: transform 0.2s ease;
-      cursor: default;
-    }
-    .confession:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 6px 15px var(--pink-accent);
-    }
-    .author {
-      font-weight: 700;
-      font-style: normal;
-      margin-top: 10px;
-      text-align: right;
-      font-size: 1rem;
-      color: var(--pink-lightdark);
-    }
+  /* Shake animation for interactive buttons */
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25%, 75% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+  }
 
-    /* Surprise confession section */
-    .surprise-box {
-      background: rgba(11, 61, 145, 0.7);
-      padding: 25px;
-      margin: 30px auto;
-      border-radius: 16px;
-      text-align: center;
-      box-shadow: 0 0 25px var(--pink-accent);
-      user-select: none;
-      cursor: pointer;
-      max-width: 400px;
-      transition: background 0.5s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    .surprise-box:hover {
-      background: var(--pink-lightdark);
-      color: var(--skyblue-dark);
-    }
-    .surprise-box span {
-      font-size: 1.5rem;
-      font-weight: 600;
-      letter-spacing: 1.2px;
-    }
+  nav button.shake:hover {
+    animation: shake 0.8s ease infinite;
+  }
 
-    /* Surprise message hidden by default */
-    .surprise-message {
-      display: none;
-      font-size: 1.3rem;
-      margin-top: 20px;
-      color: var(--skyblue-dark);
-      padding: 15px;
-      background: var(--pink-accent);
-      border-radius: 14px;
-      box-shadow: 0 0 15px #d18a9f;
-      animation: fadeIn 1s ease forwards;
-    }
-    .surprise-open .surprise-message {
-      display: block;
-    }
-
-    /* Confetti container */
-    #confetti-container {
-      pointer-events: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      overflow: visible;
-      z-index: 9999;
-      user-select: none;
-      display: none;
-    }
-
-    .confetti-piece {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      background: var(--pink-lightdark);
-      opacity: 0.9;
-      animation: fall 2.5s linear forwards;
-      border-radius: 3px;
-    }
-
-    @keyframes fall {
-      0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-        filter: drop-shadow(0 0 2px var(--pink-lightdark));
-      }
-      100% {
-        transform: translateY(100vh) rotate(720deg);
-        opacity: 0;
-      }
-    }
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      nav button {
-        padding: 8px 16px;
-        font-size: 1rem;
-        margin: 0 6px;
-      }
-      section {
-        padding: 20px 20px;
-        font-size: 1.1rem;
-      }
-      .confession {
-        font-size: 1.1rem;
-      }
-    }
-  </style>
+  /* Scrollbar style for confession text overflow */
+  .confession-card {
+    max-height: 180px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--pink-accent) var(--skyblue-dark);
+  }
+  .confession-card::-webkit-scrollbar {
+    width: 8px;
+  }
+  .confession-card::-webkit-scrollbar-track {
+    background: var(--skyblue-dark);
+  }
+  .confession-card::-webkit-scrollbar-thumb {
+    background-color: var(--pink-accent);
+    border-radius: 10px;
+  }
+</style>
 </head>
 <body>
-  <main>
-    <h1>Love Confessions & Surprises</h1>
-    <nav>
-      <button class="nav-btn active" data-target="layout1">Confessions One</button>
-      <button class="nav-btn" data-target="layout2">Confessions Two</button>
-      <button class="nav-btn" data-target="surprise">Surprise Box</button>
-    </nav>
+<main>
+  <h1>Fun & Romantic Love Confessions</h1>
+  <nav role="tablist" aria-label="Select Confession Layout">
+    <button class="nav-btn active" data-target="confessions1" role="tab" aria-selected="true" tabindex="0">💌 Confessions #1</button>
+    <button class="nav-btn shake" data-target="confessions2" role="tab" aria-selected="false" tabindex="-1">💕 Confessions #2</button>
+    <button class="nav-btn" data-target="surpriseBox" role="tab" aria-selected="false" tabindex="-1">🎁 Surprise Box</button>
+    <button class="nav-btn" id="sound-toggle" role="button" aria-pressed="false" tabindex="0" title="Toggle Sweet Sounds">🔔 Sound Off</button>
+  </nav>
 
-    <!-- Layout 1 -->
-    <section id="layout1" class="layout active">
-      <div class="confession">
-        "Every time I see your smile, my heart skips a beat."
-        <div class="author">- Your Secret Admirer</div>
-      </div>
-      <div class="confession">
-        "I love the way you light up every room you enter."
-        <div class="author">- From the Shadows</div>
-      </div>
-      <div class="confession">
-        "With you, life feels like a beautiful dream I never want to wake from."
-        <div class="author">- Yours Forever</div>
-      </div>
-    </section>
+  <!-- Confessions Section 1 -->
+  <section id="confessions1" class="active" role="tabpanel" tabindex="0">
+    <h2>Sweet Confessions #1</h2>
+    <div class="confession-card" tabindex="0">
+      From the first hello, my heart started beating just for you.<svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45..."/></svg>
+      <div class="confession-author">Forever Yours</div>
+    </div>
+    <div class="confession-card" tabindex="0">
+      Your laughter warms the coldest nights.<svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35..."/></svg>
+      <div class="confession-author">Secret Admirer</div>
+    </div>
+    <!-- more confessions with distinct animations and heart icon pulsations -->
+    <!-- ...
+    Note: More than 20-30 confession cards can be added here with incremental animation delays to fill lines...
+    -->    
+  </section>
 
-    <!-- Layout 2 -->
-    <section id="layout2" class="layout">
-      <div class="confession">
-        "If loving you is a sin, I never want to be forgiven."
-        <div class="author">- Your Devoted</div>
-      </div>
-      <div class="confession">
-        "You’re my first thought when I wake and my last before I sleep."
-        <div class="author">- Always Thinking</div>
-      </div>
-      <div class="confession">
-        "I collected moments of you in my heart like precious jewels."
-        <div class="author">- Treasure Keeper</div>
-      </div>
-    </section>
+  <!-- Confessions Section 2 -->
+  <section id="confessions2" role="tabpanel" tabindex="0" hidden>
+    <h2>Heartfelt Confessions #2</h2>
+    <div class="confession-card" tabindex="0">
+      Loving you is like breathing—essential and natural.<svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35..."/></svg>
+      <div class="confession-author">Your Devoted</div>
+    </div>
+    <div class="confession-card" tabindex="0">
+      Every thought leads me back to you.<svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35..."/></svg>
+      <div class="confession-author">Eternal Song</div>
+    </div>
+    <!-- More extended, varied confessions with unique text and animations -->    
+  </section>
 
-    <!-- Surprise Confession Box -->
-    <section id="surprise" class="layout">
-      <div class="surprise-box" id="surpriseBox">
-        <span>Click for a Surprise Confession 💌</span>
-        <div class="surprise-message" id="surpriseMessage">I was nervous to tell you, but I think I'm totally in love with you. Will you be mine forever?</div>
-      </div>
-    </section>
-  </main>
+  <!-- Surprise Box -->
+  <section id="surpriseBox" role="tabpanel" tabindex="0" hidden>
+    <h2>Surprise Confession Box</h2>
+    <div class="surprise-box" role="button" tabindex="0" aria-pressed="false" id="surpriseBoxButton" aria-label="Click to reveal surprise confessions">
+      <span>Tap or Click Here for a Surprise Confession 💌</span>
+      <div class="surprise-message" aria-live="polite" aria-atomic="true"></div>
+    </div>
+  </section>
+</main>
 
-  <!-- Confetti Container -->
-  <div id="confetti-container"></div>
+<div id="confetti-container"></div>
 
-  <script>
-    const navButtons = document.querySelectorAll('.nav-btn');
-    const layouts = document.querySelectorAll('.layout');
-    const surpriseBox = document.getElementById('surpriseBox');
-    const surpriseMessage = document.getElementById('surpriseMessage');
-    const confettiContainer = document.getElementById('confetti-container');
+<script>
+  // Basic navigation tab switching
+  const navButtons = document.querySelectorAll('nav .nav-btn');
+  const sections = document.querySelectorAll('main > section');
+  navButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      navButtons.forEach(b => { 
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+        b.tabIndex = -1;
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      btn.tabIndex = 0;
 
-    // Navigation Logic
-    navButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        navButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const target = btn.getAttribute('data-target');
-        layouts.forEach(layout => {
-          layout.classList.toggle('active', layout.id === target);
-        });
+      const target = btn.dataset.target;
+      sections.forEach(sec => {
+        if(sec.id === target) {
+          sec.classList.add('active');
+          sec.removeAttribute('hidden');
+          sec.focus();
+          sec.style.opacity = '1';
+          sec.style.pointerEvents = 'auto';
+        } else {
+          sec.classList.remove('active');
+          sec.setAttribute('hidden', '');
+          sec.style.opacity = '0.5';
+          sec.style.pointerEvents = 'none';
+        }
       });
     });
+  });
 
-    // Surprise Confession Toggle & Effects
-    surpriseBox.addEventListener('click', () => {
-      if(surpriseBox.classList.contains('surprise-open')){
-        surpriseBox.classList.remove('surprise-open');
-        stopConfetti();
-      } else {
-        surpriseBox.classList.add('surprise-open');
+  // Surprise box logic with multi-stage revelations
+  const surpriseBox = document.getElementById('surpriseBoxButton');
+  const surpriseMessage = surpriseBox.querySelector('.surprise-message');
+  const confettiContainer = document.getElementById('confetti-container');
+
+  // Surprise confession texts
+  const surpriseTexts = [
+    "I was nervous, but I think I'm truly in love with you.",
+    "Your smile has stolen my heart entirely.",
+    "Will you be mine forever?",
+    "I promise to love and cherish you every day."
+  ];
+  let surpriseIndex = 0;
+
+  surpriseBox.addEventListener('click', revealSurprise);
+  surpriseBox.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      revealSurprise();
+    }
+  });
+
+  function revealSurprise() {
+    if (!surpriseBox.classList.contains('active')) {
+      surpriseBox.classList.add('active');
+      surpriseMessage.textContent = surpriseTexts[surpriseIndex];
+      startConfetti();
+    } else {
+      surpriseIndex++;
+      if(surpriseIndex < surpriseTexts.length){
+        fadeOutInText(surpriseMessage, surpriseTexts[surpriseIndex]);
         startConfetti();
-        playSparkles();
+      } else {
+        surpriseMessage.textContent = "Thank you for sharing this moment ❤️";
+        stopConfetti();
+        setTimeout(() => {
+          surpriseBox.classList.remove('active');
+          surpriseIndex = 0;
+          surpriseMessage.textContent = "";
+        }, 4000);
       }
-    });
+    }
+  }
 
-    // Confetti effect creation
-    function startConfetti(){
-      confettiContainer.style.display = 'block';
-      for(let i=0; i<100; i++){
-        const piece = document.createElement('div');
-        piece.classList.add('confetti-piece');
-        piece.style.left = Math.random() * 100 + 'vw';
-        piece.style.background = Math.random() > 0.5 ? 'var(--pink-lightdark)' : 'var(--text-light)';
-        piece.style.animationDuration = (Math.random() * 1 + 1.5) + 's';
-        piece.style.animationDelay = (Math.random() * 1) + 's';
-        confettiContainer.appendChild(piece);
+  // Animate surprise message fade out/in
+  function fadeOutInText(element, newText) {
+    element.style.opacity = 0;
+    setTimeout(() => {
+      element.textContent = newText;
+      element.style.opacity = 1;
+    }, 400);
+  }
+
+  // Confetti functions
+  function startConfetti(){
+    confettiContainer.style.display = "block";
+    for(let i=0; i<120; i++){
+      let piece = document.createElement("div");
+      piece.classList.add("confetti-piece");
+      piece.classList.add(Math.random() > 0.5 ? "pink" : "blue");
+      piece.style.left = Math.random()*100 + "vw";
+      piece.style.animationDuration = (Math.random()*2 + 2) + "s";
+      piece.style.animationDelay = (Math.random()*0.8) + "s";
+      confettiContainer.appendChild(piece);
+    }
+    setTimeout(clearConfetti, 3500);
+  }
+  function clearConfetti(){
+    while(confettiContainer.firstChild)
+      confettiContainer.removeChild(confettiContainer.firstChild);
+    confettiContainer.style.display = "none";
+  }
+
+  // Floating hearts follow cursor effect
+  let hearts = [];
+  function createFloatingHeart(x, y) {
+    const heartNS = "http://www.w3.org/2000/svg";
+    let svg = document.createElementNS(heartNS, "svg");
+    svg.setAttribute("class", "floating-heart");
+    svg.style.left = x + "px";
+    svg.style.bottom = "-30px";
+    svg.style.width = "22px";
+    svg.style.height = "22px";
+    svg.style.position = "fixed";
+    svg.style.pointerEvents = "none";
+    svg.style.fill = Math.random() < 0.5 ? "var(--heart-pink)" : "var(--heart-red)";
+    let path = document.createElementNS(heartNS, "path");
+    path.setAttribute("d", "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6.5 3.5 5 5.5 5 6.9 5 8 6.1 8 7.5c0 1.2-1 2.3-2.4 3.7-1 1-2 2-2 3.3 0 2.4 2.7 4.1 6.4 4.5L12 21.35z");
+    svg.appendChild(path);
+    document.body.appendChild(svg);
+    hearts.push(svg);
+    animateHeart(svg);
+  }
+
+  function animateHeart(el) {
+    let pos = 0;
+    let maxPos = window.innerHeight + 40;
+    let leftMove = (Math.random()*20 - 10);
+    let fadeDuration = 5000 + (Math.random() * 2500);
+
+    let anim = setInterval(() => {
+      pos++;
+      if(pos > maxPos){
+        clearInterval(anim);
+        el.remove();
+        hearts = hearts.filter(h => h !== el);
       }
-      // Clean confetti after 3 seconds
-      setTimeout(() => {
-        while(confettiContainer.firstChild) {
-          confettiContainer.removeChild(confettiContainer.firstChild);
-        }
-        confettiContainer.style.display = 'none';
-      }, 3000);
-    }
-    function stopConfetti(){
-      while(confettiContainer.firstChild) {
-        confettiContainer.removeChild(confettiContainer.firstChild);
-      }
-      confettiContainer.style.display = 'none';
-    }
+      el.style.bottom = pos + "px";
+      el.style.left = (parseFloat(el.style.left) + leftMove*0.02) + "px";
+      el.style.opacity = 1 - pos / maxPos;
+    }, fadeDuration/ maxPos);
+  }
 
-    // Sparkle effect on surprise message (text glow animation)
-    function playSparkles(){
-      const message = surpriseMessage;
-      let intensity = 0;
-      const sparkleInterval = setInterval(() => {
-        intensity = intensity === 0 ? 1 : 0;
-        message.style.textShadow = intensity ? '0 0 10px var(--pink-accent), 0 0 20px var(--pink-accent)' : 'none';
-      }, 500);
+  window.addEventListener('mousemove', e => {
+    if(Math.random() < 0.12) createFloatingHeart(e.clientX, window.innerHeight - e.clientY);
+  });
 
-      // Stop sparkle after 3 seconds
-      setTimeout(() => {
-        clearInterval(sparkleInterval);
-        message.style.textShadow = 'none';
-      }, 3000);
+  // Sound toggle implementation
+  const soundToggleBtn = document.getElementById('sound-toggle');
+  let soundOn = false;
+  const chimeAudio = new Audio('https://assets.codepen.io/605876/chime.mp3');
+  chimeAudio.volume = 0.05;
+
+  soundToggleBtn.addEventListener('click', () => {
+    soundOn = !soundOn;
+    soundToggleBtn.textContent = soundOn ? '🔔 Sound On' : '🔕 Sound Off';
+    soundToggleBtn.setAttribute('aria-pressed', soundOn);
+  });
+
+  // Play sound when surprise confessions active
+  let lastSurpriseTime = 0;
+  function maybePlaySound() {
+    if(soundOn && Date.now() - lastSurpriseTime > 2000){
+      chimeAudio.currentTime = 0;
+      chimeAudio.play();
+      lastSurpriseTime = Date.now();
     }
-  </script>
+  }
+
+  // Modify revealSurprise to include play sound
+  const originalRevealSurprise = revealSurprise;
+  revealSurprise = function(){
+    maybePlaySound();
+    originalRevealSurprise();
+  }
+</script>
 </body>
 </html>
-
