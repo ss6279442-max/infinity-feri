@@ -1,588 +1,498 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Fun Love Confessions & Surprises</title>
-<style>
-  /* Root color variables */
-  :root {
-    --skyblue-dark: #0b3d91;
-    --pink-lightdark: #db9ca2;
-    --pink-accent: #f2c1d1;
-    --text-light: #f9f9f9;
-    --heart-red: #ff4b5c;
-    --heart-pink: #f19ca3;
-    --shadow-pink: rgba(219,156,162,0.5);
-  }
-  
-  /* Base reset and styles */
-  *, *::before, *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  html, body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    height: 100%;
-    background: linear-gradient(135deg, var(--skyblue-dark), #2e58a3);
-    color: var(--text-light);
-    overflow-x: hidden;
-  }
-  body {
-    display: flex;
-    justify-content: center;
-    padding: 20px 15px;
-  }
-  main {
-    position: relative;
-    max-width: 960px;
-    width: 100%;
-    background: rgba(255,255,255,0.08);
-    border-radius: 25px;
-    box-shadow: 0 0 55px 6px var(--shadow-pink);
-    padding: 40px 40px 70px 40px;
-    min-height: 100vh;
-    overflow: hidden;
-    backdrop-filter: saturate(180%) blur(8px);
-  }
-  h1 {
-    font-size: 3rem;
-    color: var(--pink-lightdark);
-    text-align: center;
-    letter-spacing: 3px;
-    text-shadow: 0 0 18px var(--pink-accent);
-    margin-bottom: 25px;
-    animation: pulsate 3s ease-in-out infinite alternate;
-  }
-  nav {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    padding: 15px 0;
-    border-radius: 15px;
-    background: rgba(219,156,162,0.25);
-    margin-bottom: 40px;
-    box-shadow: inset 0 0 25px var(--pink-accent);
-  }
-  nav button {
-    background: transparent;
-    color: var(--text-light);
-    font-weight: 700;
-    border: 2px solid var(--pink-lightdark);
-    border-radius: 30px;
-    padding: 12px 45px;
-    cursor: pointer;
-    font-size: 1.15rem;
-    transition: all 0.3s ease;
-    user-select: none;
-  }
-  nav button:hover, nav button.active {
-    background: var(--pink-lightdark);
-    color: var(--skyblue-dark);
-    border-color: var(--pink-accent);
-    box-shadow: 0 0 28px var(--pink-accent);
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💖</title>
+  <style>
+/* =========================
+   LOVE THEMED STYLESHEET
+   Sky blue + pink palette
+   ========================= */
 
-  section {
-    max-width: 920px;
-    margin: 0 auto 40px;
-    border-radius: 20px;
-    background: rgba(219, 156, 162, 0.28);
-    box-shadow: inset 0 0 28px var(--pink-accent);
-    padding: 30px 40px 50px 40px;
-    opacity: 0;
-    transform: translateY(25px);
-    transition: opacity 0.75s ease, transform 0.75s ease;
-    position: relative;
-    overflow: hidden;
-  }
-  section.active {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  h2 {
-    text-align: center;
-    font-weight: 700;
-    font-size: 2rem;
-    margin-bottom: 20px;
-    background: linear-gradient(90deg, #f2c1d1, var(--pink-lightdark), var(--skyblue-dark));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: textGlow 5s ease-in-out infinite alternate;
-    letter-spacing: 2px;
-  }
+/* Reset & layout */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: "Trebuchet MS", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #bfe9ff 0%, #ffc1de 100%);
+  color: #222;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  /* Confession Card */
-  .confession-card {
-    background: var(--pink-lightdark);
-    color: var(--skyblue-dark);
-    box-shadow: 0 12px 28px 4px rgba(219,156,162,0.5);
-    border-radius: 22px;
-    padding: 28px 38px;
-    margin-bottom: 30px;
-    font-style: italic;
-    font-size: 1.25rem;
-    position: relative;
-    overflow: hidden;
-    cursor: default;
-    animation-fill-mode: forwards;
-    opacity: 0;
-    transform: translateX(-30%);
-  }
-  /* Animate confession cards one by one */
-  .confession-card:nth-child(1) { animation: floatInLeft 0.8s 0.35s ease forwards; }
-  .confession-card:nth-child(2) { animation: floatInLeft 0.8s 0.65s ease forwards; }
-  .confession-card:nth-child(3) { animation: floatInLeft 0.8s 0.95s ease forwards; }
-  .confession-card:nth-child(4) { animation: floatInLeft 0.8s 1.25s ease forwards; }
-  .confession-card:nth-child(5) { animation: floatInLeft 0.8s 1.55s ease forwards; }
-  .confession-card:nth-child(6) { animation: floatInLeft 0.8s 1.85s ease forwards; }
+/* full-screen container */
+#app {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  place-items: center;
+}
 
-  @keyframes floatInLeft {
-    0% {opacity: 0; transform: translateX(-30%);}
-    100% {opacity: 1; transform: translateX(0);}
-  }
+/* card wrapper */
+.panel {
+  width: min(980px, 94vw);
+  height: min(720px, 92vh);
+  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,245,255,0.8));
+  border-radius: 26px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+  position: relative;
+  overflow: hidden;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
 
-  .confession-card:hover {
-    box-shadow: 0 18px 48px 7px var(--pink-accent);
-    transform: translateY(-12px) scale(1.05);
-    transition: all 0.35s ease;
-  }
+/* top nav (hidden textual titles removed) */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  pointer-events: none;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: auto;
+}
+.logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ffe6f2, #ffc1de);
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  box-shadow: 0 6px 18px rgba(255,105,180,0.18);
+}
+.nav-actions {
+  display: flex;
+  gap: 8px;
+  pointer-events: auto;
+}
+.icon-btn {
+  border: none;
+  background: rgba(255,255,255,0.6);
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+  backdrop-filter: blur(6px);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.icon-btn:active { transform: translateY(1px) scale(0.99); }
 
-  .confession-author {
-    font-weight: 700;
-    font-size: 1rem;
-    text-align: right;
-    margin-top: 12px;
-    letter-spacing: 0.05em;
-  }
-  .confession-author::before {
-    content: "— ";
-  }
+/* main content split */
+.content {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 18px;
+  align-items: stretch;
+}
 
-  /* Heart icon - pulse */
-  .heart-icon {
-    position: absolute;
-    top: 18px;
-    right: 25px;
-    width: 30px;
-    height: 30px;
-    fill: var(--heart-red);
-    filter: drop-shadow(0 0 3px var(--pink-accent));
-    animation: heartBeat 2.5s ease-in-out infinite;
-    user-select: none;
-  }
-  @keyframes heartBeat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.3);}
-  }
+/* left: messages carousel */
+.left {
+  background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(240,248,255,0.4));
+  border-radius: 18px;
+  padding: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+.greeting {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ff3fa7;
+  letter-spacing: 0.4px;
+  pointer-events: none;
+}
+.messages {
+  flex: 1;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.card {
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  padding: 20px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,240,250,0.85));
+  box-shadow: 0 10px 30px rgba(200,100,150,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+  justify-content: center;
+}
 
-  /* Surprise box - multi-step with fancy text and animation */
-  .surprise-box {
-    max-width: 640px;
-    margin: 40px auto;
-    padding: 36px 28px;
-    background: var(--skyblue-dark);
-    border-radius: 26px;
-    box-shadow: 0 0 60px var(--pink-accent);
-    text-align: center;
-    cursor: pointer;
-    user-select: none;
-    position: relative;
-    overflow: hidden;
-  }
+/* message lines */
+.msg {
+  font-size: 1.15rem;
+  color: #333;
+  line-height: 1.5;
+  transform-origin: left center;
+  opacity: 0;
+  transform: translateY(14px) scale(0.99);
+  transition: all 0.6s cubic-bezier(.2,.9,.3,1);
+}
+.msg.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
 
-  .surprise-box span {
-    display: block;
-    font-weight: bold;
-    font-size: 1.55rem;
-    letter-spacing: 1.5px;
-    color: var(--pink-lightdark);
-    text-shadow: 0 0 15px var(--pink-accent);
-    margin-bottom: 40px;
-    animation: glowText 3.7s linear infinite alternate;
-  }
+/* cute list */
+.cute-list {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+}
+.cute-item {
+  background: linear-gradient(90deg, rgba(255,250,255,0.7), rgba(255,240,250,0.6));
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(255,105,180,0.06);
+  cursor: default;
+}
 
-  /* Multiple surprise messages with fade */
-  .surprise-message {
-    font-size: 1.3rem;
-    font-weight: 600;
-    background: var(--pink-accent);
-    color: var(--skyblue-dark);
-    padding: 22px 35px;
-    border-radius: 22px;
-    box-shadow: 0 0 20px #d18a9f;
-    letter-spacing: 0.05em;
-    opacity: 0;
-    transform: scale(0.85);
-    transition: all 0.6s ease;
-    max-width: 580px;
-    margin: 0 auto;
-  }
+/* right: proposal panel */
+.right {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.proposal-area {
+  flex: 1;
+  background: linear-gradient(180deg, rgba(255,230,245,0.95), rgba(255,245,255,0.9));
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.proposal-box {
+  width: 100%;
+  padding: 18px;
+  border-radius: 14px;
+  border: 2px dashed rgba(255,105,180,0.28);
+  text-align: center;
+  font-size: 1.15rem;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,240,250,0.9));
+  box-shadow: 0 12px 30px rgba(255,105,180,0.06);
+}
+.proposal-box:hover { transform: translateY(-6px) scale(1.01); box-shadow: 0 18px 40px rgba(255,105,180,0.12); }
 
-  .surprise-message.active {
-    opacity: 1;
-    transform: scale(1);
-  }
+/* surprise modal */
+.modal {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, rgba(0,0,0,0.14), rgba(0,0,0,0.22));
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+}
+.modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-card {
+  width: min(720px, 92%);
+  background: linear-gradient(180deg, #fff, #fff0fb);
+  padding: 28px;
+  border-radius: 20px;
+  box-shadow: 0 40px 90px rgba(120,40,100,0.18);
+  transform: translateY(10px) scale(0.98);
+  transition: transform 0.36s cubic-bezier(.2,.9,.3,1);
+}
+.modal.open .modal-card {
+  transform: translateY(0) scale(1);
+}
 
-  /* Interactive confetti container */
-  #confetti-container {
-    pointer-events: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    overflow: visible;
-    z-index: 9999;
-    user-select: none;
-    display: none;
-    mix-blend-mode: screen;
-  }
+/* ring & heart decorations */
+.decoration {
+  position: absolute;
+  pointer-events: none;
+}
+.heart {
+  width: 42px;
+  height: 42px;
+  display: inline-grid;
+  place-items: center;
+  font-size: 20px;
+  transform-origin: center;
+  animation: floaty 6s infinite;
+  opacity: 0.95;
+}
+.heart.small { width: 26px; height: 26px; font-size: 12px; animation-duration: 5s; }
+.heart.large { width: 58px; height: 58px; font-size: 28px; animation-duration: 7s; opacity: 0.85; }
 
-  .confetti-piece {
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    border-radius: 4px;
-    opacity: 0.9;
-    animation: confettiFall 3.6s linear forwards;
-  }
-  .confetti-piece.pink {
-    background: var(--pink-lightdark);
-    filter: drop-shadow(0 0 5px var(--pink-accent));
-  }
-  .confetti-piece.blue {
-    background: var(--skyblue-dark);
-    filter: drop-shadow(0 0 5px var(--pink-accent));
-  }
+@keyframes floaty {
+  0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.9; }
+  50% { transform: translateY(-18px) rotate(6deg) scale(1.06); opacity: 1; }
+  100% { transform: translateY(0) rotate(-3deg) scale(1); opacity: 0.9; }
+}
 
-  @keyframes confettiFall {
-    0% { transform: translateY(0) rotate(0); opacity: 1; }
-    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-  }
+/* small controls */
+.controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 6px;
+}
+.small {
+  font-size: 0.92rem;
+  color: #444;
+}
 
-  /* Floating hearts with staggered animations */
-  .floating-heart {
-    position: fixed;
-    bottom: -50px;
-    opacity: 0.8;
-    width: 18px;
-    height: 18px;
-    fill: var(--heart-pink);
-    pointer-events: none;
-    animation-name: floatUpDown;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-  }
-  .floating-heart.blue {
-    fill: var(--skyblue-dark);
-    opacity: 0.6;
-  }
-  @keyframes floatUpDown {
-    0%, 100% { transform: translateY(0); opacity: 1; }
-    50% { transform: translateY(-28px); opacity: 0.6; }
-  }
+/* footer */
+.footer {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.92rem;
+  color: #555;
+  opacity: 0.9;
+  padding-top: 6px;
+}
 
-  /* Particle circle sparkle */
-  .sparkle-circle {
-    position: absolute;
-    border-radius: 50%;
-    width: 4px;
-    height: 4px;
-    background: var(--pink-accent);
-    box-shadow: 0 0 8px var(--pink-accent);
-    animation: sparklePulse 2.8s linear infinite;
-    pointer-events: none;
-  }
-  @keyframes sparklePulse {
-    0%, 100% {
-      opacity: 0.7;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 0;
-      transform: scale(1.8);
-    }
-  }
-
-  /* Glow text animation keyframe */
-  @keyframes glowText {
-    0%, 100% {
-      text-shadow: 0 0 12px var(--pink-lightdark), 0 0 30px var(--pink-accent);
-      color: var(--pink-lightdark);
-    }
-    50% {
-      text-shadow: 0 0 30px var(--pink-lightdark), 0 0 60px var(--pink-accent);
-      color: var(--pink-accent);
-    }
-  }
-
-  /* Pulsate intro animation */
-  @keyframes pulsate {
-    0%, 100% { opacity: 1; text-shadow: 0 0 20px var(--pink-accent); }
-    50% { opacity: 0.85; text-shadow: 0 0 40px var(--pink-accent), 0 0 60px var(--pink-lightdark); }
-  }
-
-  /* Shake animation for interactive buttons */
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25%, 75% { transform: translateX(-5px); }
-    50% { transform: translateX(5px); }
-  }
-
-  nav button.shake:hover {
-    animation: shake 0.8s ease infinite;
-  }
-
-  /* Scrollbar style for confession text overflow */
-  .confession-card {
-    max-height: 180px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--pink-accent) var(--skyblue-dark);
-  }
-  .confession-card::-webkit-scrollbar {
-    width: 8px;
-  }
-  .confession-card::-webkit-scrollbar-track {
-    background: var(--skyblue-dark);
-  }
-  .confession-card::-webkit-scrollbar-thumb {
-    background-color: var(--pink-accent);
-    border-radius: 10px;
-  }
-</style>
+/* responsive */
+@media (max-width: 880px) {
+  .content { grid-template-columns: 1fr; padding: 6px; }
+  .right { max-width: none; }
+  .panel { height: 100vh; border-radius: 0; padding: 18px; }
+}
+  </style>
 </head>
 <body>
-<main>
-  <h1>Fun & Romantic Love Confessions</h1>
-  <nav role="tablist" aria-label="Select Confession Layout">
-    <button class="nav-btn active" data-target="confessions1" role="tab" aria-selected="true" tabindex="0">💌 Confessions #1</button>
-    <button class="nav-btn shake" data-target="confessions2" role="tab" aria-selected="false" tabindex="-1">💕 Confessions #2</button>
-    <button class="nav-btn" data-target="surpriseBox" role="tab" aria-selected="false" tabindex="-1">🎁 Surprise Box</button>
-    <button class="nav-btn" id="sound-toggle" role="button" aria-pressed="false" tabindex="0" title="Toggle Sweet Sounds">🔔 Sound Off</button>
-  </nav>
-
-  <!-- Confessions Section 1 -->
-  <section id="confessions1" class="active" role="tabpanel" tabindex="0">
-    <h2>Sweet Confessions #1</h2>
-    <div class="confession-card" tabindex="0">
-      From the first hello, my heart started beating just for you.<svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45..."/></svg>
-      <div class="confession-author">Forever Yours</div>
-    </div>
-    <div class="confession-card" tabindex="0">
-      Your laughter warms the coldest nights.<svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35..."/></svg>
-      <div class="confession-author">Secret Admirer</div>
-    </div>
-    <!-- more confessions with distinct animations and heart icon pulsations -->
-    <!-- ...
-    Note: More than 20-30 confession cards can be added here with incremental animation delays to fill lines...
-    -->    
-  </section>
-
-  <!-- Confessions Section 2 -->
-  <section id="confessions2" role="tabpanel" tabindex="0" hidden>
-    <h2>Heartfelt Confessions #2</h2>
-    <div class="confession-card" tabindex="0">
-      Loving you is like breathing—essential and natural.<svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35..."/></svg>
-      <div class="confession-author">Your Devoted</div>
-    </div>
-    <div class="confession-card" tabindex="0">
-      Every thought leads me back to you.<svg class="heart-icon" viewBox="0 0 24 24"><path d="M12 21.35..."/></svg>
-      <div class="confession-author">Eternal Song</div>
-    </div>
-    <!-- More extended, varied confessions with unique text and animations -->    
-  </section>
-
-  <!-- Surprise Box -->
-  <section id="surpriseBox" role="tabpanel" tabindex="0" hidden>
-    <h2>Surprise Confession Box</h2>
-    <div class="surprise-box" role="button" tabindex="0" aria-pressed="false" id="surpriseBoxButton" aria-label="Click to reveal surprise confessions">
-      <span>Tap or Click Here for a Surprise Confession 💌</span>
-      <div class="surprise-message" aria-live="polite" aria-atomic="true"></div>
-    </div>
-  </section>
-</main>
-
-<div id="confetti-container"></div>
-
-<script>
-  // Basic navigation tab switching
-  const navButtons = document.querySelectorAll('nav .nav-btn');
-  const sections = document.querySelectorAll('main > section');
-  navButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      navButtons.forEach(b => { 
-        b.classList.remove('active');
-        b.setAttribute('aria-selected', 'false');
-        b.tabIndex = -1;
-      });
-      btn.classList.add('active');
-      btn.setAttribute('aria-selected', 'true');
-      btn.tabIndex = 0;
-
-      const target = btn.dataset.target;
-      sections.forEach(sec => {
-        if(sec.id === target) {
-          sec.classList.add('active');
-          sec.removeAttribute('hidden');
-          sec.focus();
-          sec.style.opacity = '1';
-          sec.style.pointerEvents = 'auto';
-        } else {
-          sec.classList.remove('active');
-          sec.setAttribute('hidden', '');
-          sec.style.opacity = '0.5';
-          sec.style.pointerEvents = 'none';
-        }
-      });
-    });
-  });
-
-  // Surprise box logic with multi-stage revelations
-  const surpriseBox = document.getElementById('surpriseBoxButton');
-  const surpriseMessage = surpriseBox.querySelector('.surprise-message');
-  const confettiContainer = document.getElementById('confetti-container');
-
-  // Surprise confession texts
-  const surpriseTexts = [
-    "I was nervous, but I think I'm truly in love with you.",
-    "Your smile has stolen my heart entirely.",
-    "Will you be mine forever?",
-    "I promise to love and cherish you every day."
+  <div id="app">
+    <main class="panel" role="main" aria-labelledby="greeting">
+      <div class="topbar" aria-hidden="true">
+        <div class="brand">
+          <div class="logo">♥</div>
+        </div>
+        <div class="nav-actions" aria-hidden="true">
+          <button class="icon-btn" id="prevBtn" title="Previous">◀</button>
+          <button class="icon-btn" id="nextBtn" title="Next">▶</button>
+        </div>
+      </div>
+      <section class="content" aria-live="polite">
+        <div class="left">
+          <div class="greeting" id="greeting">little notes for you 💌</div>
+          <div class="messages" id="messages">
+            <div class="card" id="card">
+              <p class="msg" id="line1">you make rainy days feel like summers — warm and bright.</p>
+              <p class="msg" id="line2">when you laugh, the world rearranges itself to fit that sound.</p>
+              <p class="msg" id="line3">i like the way our stories sound when we tell them together.</p>
+              <div class="cute-list" id="cuteList">
+                <div class="cute-item">you are my favorite hello and hardest goodbye.</div>
+                <div class="cute-item">i carry your smile like a favorite song.</div>
+                <div class="cute-item">with you, ordinary things become enchanted.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <aside class="right" aria-label="proposal">
+          <div class="proposal-area">
+            <div class="proposal-box" id="proposalBox" role="button" tabindex="0" aria-pressed="false">
+              🎁 Tap for a little surprise...
+            </div>
+            <div class="controls">
+              <div class="small">Tip: Press the box or press Enter</div>
+            </div>
+          </div>
+          <div class="footer">made with stars, sugar, and a little courage ✨</div>
+        </aside>
+      </section>
+      <div class="decoration" aria-hidden="true">
+        <div class="heart small" style="position:absolute;left:6%;top:12%;">💗</div>
+        <div class="heart" style="position:absolute;right:8%;top:8%;">💕</div>
+        <div class="heart large" style="position:absolute;left:18%;bottom:12%;">💖</div>
+        <div class="heart" style="position:absolute;right:22%;bottom:18%;">💘</div>
+      </div>
+      <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="proposalTitle">
+        <div class="modal-card">
+          <div style="display:flex;gap:12px;align-items:center;">
+            <div style="font-size:36px;">💍</div>
+            <div>
+              <div id="proposalTitle" style="font-weight:800;font-size:1.6rem;color:#ff2f86;">a little question</div>
+              <div style="opacity:0.8;font-size:0.95rem;">this is written with a trembling hand (in the best way).</div>
+            </div>
+          </div>
+          <hr style="margin:16px 0;border:none;border-top:1px solid rgba(200,100,150,0.08);" />
+          <div style="display:flex;gap:16px;flex-direction:column;align-items:center;">
+            <div style="font-size:1.25rem;color:#333;text-align:center;max-width:86%;">
+              <strong style="color:#ff2f86;">will you be mine, forever?</strong>
+            </div>
+            <div style="display:flex;gap:12px;margin-top:6px;">
+              <button class="icon-btn" id="yesBtn">Yes — forever! 💕</button>
+              <button class="icon-btn" id="noBtn">Ask me later ✨</button>
+            </div>
+            <div id="afterText" style="opacity:0.95;margin-top:8px;font-size:0.98rem;"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script>
+(function() {
+  const lines = [
+    "you make rainy days feel like summers — warm and bright.",
+    "when you laugh, the world rearranges itself to fit that sound.",
+    "i like the way our stories sound when we tell them together.",
+    "you are my favorite hello and hardest goodbye.",
+    "i carry your smile like a favorite song.",
+    "with you, ordinary things become enchanted."
   ];
-  let surpriseIndex = 0;
 
-  surpriseBox.addEventListener('click', revealSurprise);
-  surpriseBox.addEventListener('keydown', e => {
-    if(e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      revealSurprise();
+  // Carousel logic for messages
+  let idx = 0;
+  const msgEls = [document.getElementById('line1'), document.getElementById('line2'), document.getElementById('line3')];
+  const cuteList = document.getElementById('cuteList');
+  function showSlide(i) {
+    // show three sequential lines
+    for (let j = 0; j < msgEls.length; j++) {
+      const el = msgEls[j];
+      el.classList.remove('show');
+      el.style.transitionDelay = (j * 120) + 'ms';
+      void el.offsetWidth;
+      el.textContent = lines[(i + j) % lines.length];
+      setTimeout(() => el.classList.add('show'), 50 + j * 80);
     }
+    // subtle pulse for cute items
+    const items = cuteList.querySelectorAll('.cute-item');
+    items.forEach((it, k) => {
+      it.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-6px)' }, { transform: 'translateY(0)' }], { duration: 900, delay: k*80, easing: 'ease-out' });
+    });
+  }
+
+  showSlide(idx);
+
+  // navigation
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  prevBtn.addEventListener('click', () => { idx = (idx - 1 + lines.length) % lines.length; showSlide(idx); });
+  nextBtn.addEventListener('click', () => { idx = (idx + 1) % lines.length; showSlide(idx); });
+
+  // auto-advance every 6s softly
+  let auto = setInterval(() => { idx = (idx + 1) % lines.length; showSlide(idx); }, 6000);
+
+  // pause auto on hover
+  const panel = document.querySelector('.panel');
+  panel.addEventListener('mouseenter', () => clearInterval(auto));
+  panel.addEventListener('mouseleave', () => { clearInterval(auto); auto = setInterval(() => { idx = (idx + 1) % lines.length; showSlide(idx); }, 6000); });
+
+  // proposal interactions
+  const proposalBox = document.getElementById('proposalBox');
+  const modal = document.getElementById('modal');
+  const yesBtn = document.getElementById('yesBtn');
+  const noBtn = document.getElementById('noBtn');
+  const afterText = document.getElementById('afterText');
+
+  function openModal() {
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    // little confetti hearts
+    sprinkleHearts(22);
+  }
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  proposalBox.addEventListener('click', openModal);
+  proposalBox.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') openModal(); });
+
+  yesBtn.addEventListener('click', () => {
+    afterText.textContent = "my heart just answered — yes. let's write our forever together.";
+    yesBtn.disabled = true;
+    noBtn.disabled = true;
+    // celebratory animation
+    burst(28);
   });
 
-  function revealSurprise() {
-    if (!surpriseBox.classList.contains('active')) {
-      surpriseBox.classList.add('active');
-      surpriseMessage.textContent = surpriseTexts[surpriseIndex];
-      startConfetti();
-    } else {
-      surpriseIndex++;
-      if(surpriseIndex < surpriseTexts.length){
-        fadeOutInText(surpriseMessage, surpriseTexts[surpriseIndex]);
-        startConfetti();
-      } else {
-        surpriseMessage.textContent = "Thank you for sharing this moment ❤️";
-        stopConfetti();
-        setTimeout(() => {
-          surpriseBox.classList.remove('active');
-          surpriseIndex = 0;
-          surpriseMessage.textContent = "";
-        }, 4000);
-      }
-    }
-  }
-
-  // Animate surprise message fade out/in
-  function fadeOutInText(element, newText) {
-    element.style.opacity = 0;
-    setTimeout(() => {
-      element.textContent = newText;
-      element.style.opacity = 1;
-    }, 400);
-  }
-
-  // Confetti functions
-  function startConfetti(){
-    confettiContainer.style.display = "block";
-    for(let i=0; i<120; i++){
-      let piece = document.createElement("div");
-      piece.classList.add("confetti-piece");
-      piece.classList.add(Math.random() > 0.5 ? "pink" : "blue");
-      piece.style.left = Math.random()*100 + "vw";
-      piece.style.animationDuration = (Math.random()*2 + 2) + "s";
-      piece.style.animationDelay = (Math.random()*0.8) + "s";
-      confettiContainer.appendChild(piece);
-    }
-    setTimeout(clearConfetti, 3500);
-  }
-  function clearConfetti(){
-    while(confettiContainer.firstChild)
-      confettiContainer.removeChild(confettiContainer.firstChild);
-    confettiContainer.style.display = "none";
-  }
-
-  // Floating hearts follow cursor effect
-  let hearts = [];
-  function createFloatingHeart(x, y) {
-    const heartNS = "http://www.w3.org/2000/svg";
-    let svg = document.createElementNS(heartNS, "svg");
-    svg.setAttribute("class", "floating-heart");
-    svg.style.left = x + "px";
-    svg.style.bottom = "-30px";
-    svg.style.width = "22px";
-    svg.style.height = "22px";
-    svg.style.position = "fixed";
-    svg.style.pointerEvents = "none";
-    svg.style.fill = Math.random() < 0.5 ? "var(--heart-pink)" : "var(--heart-red)";
-    let path = document.createElementNS(heartNS, "path");
-    path.setAttribute("d", "M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6.5 3.5 5 5.5 5 6.9 5 8 6.1 8 7.5c0 1.2-1 2.3-2.4 3.7-1 1-2 2-2 3.3 0 2.4 2.7 4.1 6.4 4.5L12 21.35z");
-    svg.appendChild(path);
-    document.body.appendChild(svg);
-    hearts.push(svg);
-    animateHeart(svg);
-  }
-
-  function animateHeart(el) {
-    let pos = 0;
-    let maxPos = window.innerHeight + 40;
-    let leftMove = (Math.random()*20 - 10);
-    let fadeDuration = 5000 + (Math.random() * 2500);
-
-    let anim = setInterval(() => {
-      pos++;
-      if(pos > maxPos){
-        clearInterval(anim);
-        el.remove();
-        hearts = hearts.filter(h => h !== el);
-      }
-      el.style.bottom = pos + "px";
-      el.style.left = (parseFloat(el.style.left) + leftMove*0.02) + "px";
-      el.style.opacity = 1 - pos / maxPos;
-    }, fadeDuration/ maxPos);
-  }
-
-  window.addEventListener('mousemove', e => {
-    if(Math.random() < 0.12) createFloatingHeart(e.clientX, window.innerHeight - e.clientY);
+  noBtn.addEventListener('click', () => {
+    afterText.textContent = "softly noted. i'll wait with a smile 🌸";
+    noBtn.disabled = true;
+    setTimeout(closeModal, 1400);
   });
 
-  // Sound toggle implementation
-  const soundToggleBtn = document.getElementById('sound-toggle');
-  let soundOn = false;
-  const chimeAudio = new Audio('https://assets.codepen.io/605876/chime.mp3');
-  chimeAudio.volume = 0.05;
-
-  soundToggleBtn.addEventListener('click', () => {
-    soundOn = !soundOn;
-    soundToggleBtn.textContent = soundOn ? '🔔 Sound On' : '🔕 Sound Off';
-    soundToggleBtn.setAttribute('aria-pressed', soundOn);
+  // keyboard accessibility: escape closes
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
   });
 
-  // Play sound when surprise confessions active
-  let lastSurpriseTime = 0;
-  function maybePlaySound() {
-    if(soundOn && Date.now() - lastSurpriseTime > 2000){
-      chimeAudio.currentTime = 0;
-      chimeAudio.play();
-      lastSurpriseTime = Date.now();
+  // decorative heart sprinkles
+  function sprinkleHearts(n) {
+    for (let i = 0; i < n; i++) {
+      const el = document.createElement('div');
+      el.className = 'heart';
+      el.style.position = 'absolute';
+      el.style.left = (20 + Math.random()*60) + '%';
+      el.style.top = (20 + Math.random()*60) + '%';
+      el.style.fontSize = (12 + Math.random()*28) + 'px';
+      el.textContent = ['💗','💕','💝','💖'][Math.floor(Math.random()*4)];
+      document.querySelector('.decoration').appendChild(el);
+      // animate float and fade
+      el.animate([
+        { transform: 'translateY(0) scale(0.7)', opacity: 0 },
+        { transform: 'translateY(-120px) scale(1.1)', opacity: 1, offset: 0.4 },
+        { transform: 'translateY(-220px) scale(1.4)', opacity: 0 }
+      ], { duration: 1800 + Math.random()*1200, easing: 'cubic-bezier(.2,.9,.3,1)' })
+      setTimeout(()=> el.remove(), 2600);
     }
   }
 
-  // Modify revealSurprise to include play sound
-  const originalRevealSurprise = revealSurprise;
-  revealSurprise = function(){
-    maybePlaySound();
-    originalRevealSurprise();
+  // burst effect for yes
+  function burst(count) {
+    for (let i = 0; i < count; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'heart';
+      dot.style.position = 'absolute';
+      dot.style.left = (50 + (Math.random()-0.5)*40) + '%';
+      dot.style.top = (50 + (Math.random()-0.5)*40) + '%';
+      dot.style.fontSize = (12 + Math.random()*30) + 'px';
+      dot.textContent = ['💖','💘','💝'][Math.floor(Math.random()*3)];
+      document.body.appendChild(dot);
+      const anim = dot.animate([
+        { transform: 'translateY(0) scale(0.6)', opacity: 1 },
+        { transform: `translateY(${ -120 - Math.random()*120 }px) translateX(${ (Math.random()-0.5)*220 }px) scale(1.2) rotate(${ Math.random()*60 }deg)`, opacity: 1, offset: 0.6 },
+        { transform: 'translateY(-360px) scale(0.3)', opacity: 0 }
+      ], { duration: 1600 + Math.random()*1000, easing: 'cubic-bezier(.2,.9,.3,1)' });
+      anim.onfinish = () => dot.remove();
+    }
   }
-</script>
+
+})();
+  </script>
 </body>
 </html>
+
