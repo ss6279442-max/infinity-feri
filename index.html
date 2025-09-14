@@ -1,498 +1,298 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>💖</title>
   <style>
-/* =========================
-   LOVE THEMED STYLESHEET
-   Sky blue + pink palette
-   ========================= */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: Inter, "Trebuchet MS", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      background: linear-gradient(135deg,#a8e4ff 0%,#ff9ecf 100%);
+      display:flex;align-items:center;justify-content:center;overflow:hidden;color:#222;
+    }
 
-/* Reset & layout */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; }
-body {
-  font-family: "Trebuchet MS", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #bfe9ff 0%, #ffc1de 100%);
-  color: #222;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    #app{
+      width:94vw;max-width:1040px;height:92vh;max-height:820px;
+      border-radius:22px;box-shadow:0 28px 80px rgba(30,20,40,0.12);
+      background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(255,245,255,0.92));
+      padding:20px;position:relative;display:flex;flex-direction:column;gap:14px;
+      overflow:hidden;
+    }
 
-/* full-screen container */
-#app {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-  place-items: center;
-}
+    .top {display:flex;align-items:center;justify-content:space-between;pointer-events:none;}
+    .logo{display:flex;align-items:center;gap:10px;pointer-events:auto;}
+    .badge{
+      width:50px;height:50px;border-radius:50%;background:radial-gradient(circle at 35% 20%,#fff7fb,#ffc1de);
+      display:grid;place-items:center;font-size:22px;box-shadow:0 6px 18px rgba(255,105,180,0.12)
+    }
 
-/* card wrapper */
-.panel {
-  width: min(980px, 94vw);
-  height: min(720px, 92vh);
-  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,245,255,0.8));
-  border-radius: 26px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.12);
-  position: relative;
-  overflow: hidden;
-  padding: 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
+    .main{flex:1;display:grid;grid-template-columns:1fr 380px;gap:16px;align-items:stretch;}
+    .left{
+      background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(240,250,255,0.72));
+      border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:12px;overflow:hidden;
+    }
+    .headline{font-weight:800;color:#ff2f86;font-size:1.2rem;letter-spacing:0.2px;pointer-events:none;}
+    .notes{flex:1;display:flex;align-items:center;justify-content:center;}
+    .note-card{
+      width:100%;height:100%;border-radius:14px;padding:18px;background:linear-gradient(180deg,#fff,#fff8fb);
+      box-shadow:0 14px 40px rgba(200,90,140,0.06);display:flex;flex-direction:column;gap:12px;justify-content:center;
+    }
+    .line{
+      font-size:1.15rem;color:#333;line-height:1.5;opacity:0;transform:translateY(12px);
+      transition: all 520ms cubic-bezier(.2,.9,.3,1);
+    }
+    .line.show{opacity:1;transform:none}
+    .cute-grid{display:grid;gap:8px;margin-top:6px}
+    .cute-item{
+      background:linear-gradient(90deg, rgba(255,250,255,0.76), rgba(255,240,250,0.72));
+      padding:10px 12px;border-radius:10px;font-weight:600;box-shadow:0 6px 18px rgba(255,105,180,0.05)
+    }
 
-/* top nav (hidden textual titles removed) */
-.topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  pointer-events: none;
-}
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  pointer-events: auto;
-}
-.logo {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #ffe6f2, #ffc1de);
-  display: grid;
-  place-items: center;
-  font-size: 22px;
-  box-shadow: 0 6px 18px rgba(255,105,180,0.18);
-}
-.nav-actions {
-  display: flex;
-  gap: 8px;
-  pointer-events: auto;
-}
-.icon-btn {
-  border: none;
-  background: rgba(255,255,255,0.6);
-  padding: 8px 12px;
-  border-radius: 999px;
-  cursor: pointer;
-  font-weight: 600;
-  backdrop-filter: blur(6px);
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
-}
-.icon-btn:active { transform: translateY(1px) scale(0.99); }
+    .right{display:flex;flex-direction:column;gap:12px;align-items:stretch}
+    .proposal{
+      flex:1;background:linear-gradient(180deg, rgba(255,235,245,0.98), rgba(255,245,255,0.95));
+      border-radius:12px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;
+    }
+    .box{
+      width:100%;padding:18px;border-radius:14px;border:2px dashed rgba(255,105,180,0.26);
+      background:linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,240,250,0.92));
+      text-align:center;font-weight:700;font-size:1.05rem;cursor:pointer;user-select:none;
+      transition:transform .22s ease, box-shadow .22s ease;
+      box-shadow:0 12px 28px rgba(255,105,180,0.06);
+    }
+    .box:hover{transform:translateY(-6px)}
+    .box.shaky{animation:shake 900ms ease-in-out infinite}
+    @keyframes shake{
+      0%{transform:translateY(0) rotate(-1deg)}
+      25%{transform:translateY(-3px) rotate(1deg)}
+      50%{transform:translateY(0) rotate(-0.5deg)}
+      75%{transform:translateY(-2px) rotate(1.2deg)}
+      100%{transform:translateY(0) rotate(-1deg)}
+    }
 
-/* main content split */
-.content {
-  flex: 1;
-  display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 18px;
-  align-items: stretch;
-}
+    .pm{margin-top:12px;width:100%;text-align:center;display:none;flex-direction:column;gap:10px;align-items:center;}
+    .pm.show{display:flex}
+    .pm h2{font-size:1.1rem;color:#ff2f86;margin-bottom:4px}
+    .btns{display:flex;gap:10px}
+    .btn{
+      border:none;padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer;background:rgba(255,255,255,0.92);
+      box-shadow:0 10px 28px rgba(0,0,0,0.06);transition:transform .15s ease;
+    }
+    .btn:active{transform:translateY(1px)}
+    .yes{color:#fff;background:linear-gradient(90deg,#ff6aa4,#ff2f86)}
+    .later{color:#ff2f86;border:2px solid rgba(255,47,134,0.12);background:transparent}
 
-/* left: messages carousel */
-.left {
-  background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(240,248,255,0.4));
-  border-radius: 18px;
-  padding: 18px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  position: relative;
-}
-.greeting {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #ff3fa7;
-  letter-spacing: 0.4px;
-  pointer-events: none;
-}
-.messages {
-  flex: 1;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-.card {
-  width: 100%;
-  height: 100%;
-  border-radius: 14px;
-  padding: 20px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,240,250,0.85));
-  box-shadow: 0 10px 30px rgba(200,100,150,0.06);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  align-items: flex-start;
-  justify-content: center;
-}
+    .dramatic{margin-top:8px;font-size:1.05rem;color:#444;display:none;opacity:0;transform:scale(.98);transition:all 520ms}
+    .dramatic.show{display:block;opacity:1;transform:scale(1)}
+    .love-reply{margin-top:8px;font-size:1.25rem;color:#ff2470;font-weight:800;display:none;opacity:0;transform:scale(.95);transition:all 420ms cubic-bezier(.2,.9,.3,1)}
+    .love-reply.show{display:block;opacity:1;transform:scale(1)}
 
-/* message lines */
-.msg {
-  font-size: 1.15rem;
-  color: #333;
-  line-height: 1.5;
-  transform-origin: left center;
-  opacity: 0;
-  transform: translateY(14px) scale(0.99);
-  transition: all 0.6s cubic-bezier(.2,.9,.3,1);
-}
-.msg.show {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
+    .finalReveal{
+      position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;opacity:0;transition:opacity .6s ease;
+    }
+    .finalReveal.show{opacity:1}
+    .finalText{
+      background:linear-gradient(90deg,#fff0fb,#fffbe6);
+      padding:28px 36px;border-radius:20px;font-weight:900;font-size:2rem;color:#ff2f86;
+      text-align:center;box-shadow:0 40px 120px rgba(255,70,140,0.12);
+      transform:scale(.98);animation:glow 1.2s ease-in-out infinite alternate;
+    }
+    @keyframes glow{
+      from{filter:drop-shadow(0 10px 30px rgba(255,120,170,0.08))}
+      to{filter:drop-shadow(0 26px 60px rgba(255,80,150,0.16))}
+    }
 
-/* cute list */
-.cute-list {
-  display: grid;
-  gap: 8px;
-  width: 100%;
-}
-.cute-item {
-  background: linear-gradient(90deg, rgba(255,250,255,0.7), rgba(255,240,250,0.6));
-  padding: 10px 14px;
-  border-radius: 12px;
-  font-weight: 600;
-  box-shadow: 0 6px 18px rgba(255,105,180,0.06);
-  cursor: default;
-}
+    .decor{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+    .heart, .spark, .confetti{position:absolute;pointer-events:none;font-size:18px;will-change:transform,opacity;}
 
-/* right: proposal panel */
-.right {
-  width: 100%;
-  max-width: 380px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.proposal-area {
-  flex: 1;
-  background: linear-gradient(180deg, rgba(255,230,245,0.95), rgba(255,245,255,0.9));
-  border-radius: 14px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-.proposal-box {
-  width: 100%;
-  padding: 18px;
-  border-radius: 14px;
-  border: 2px dashed rgba(255,105,180,0.28);
-  text-align: center;
-  font-size: 1.15rem;
-  cursor: pointer;
-  user-select: none;
-  transition: transform 0.28s ease, box-shadow 0.28s ease;
-  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,240,250,0.9));
-  box-shadow: 0 12px 30px rgba(255,105,180,0.06);
-}
-.proposal-box:hover { transform: translateY(-6px) scale(1.01); box-shadow: 0 18px 40px rgba(255,105,180,0.12); }
-
-/* surprise modal */
-.modal {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(180deg, rgba(0,0,0,0.14), rgba(0,0,0,0.22));
-  backdrop-filter: blur(6px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.28s ease;
-}
-.modal.open {
-  opacity: 1;
-  pointer-events: auto;
-}
-.modal-card {
-  width: min(720px, 92%);
-  background: linear-gradient(180deg, #fff, #fff0fb);
-  padding: 28px;
-  border-radius: 20px;
-  box-shadow: 0 40px 90px rgba(120,40,100,0.18);
-  transform: translateY(10px) scale(0.98);
-  transition: transform 0.36s cubic-bezier(.2,.9,.3,1);
-}
-.modal.open .modal-card {
-  transform: translateY(0) scale(1);
-}
-
-/* ring & heart decorations */
-.decoration {
-  position: absolute;
-  pointer-events: none;
-}
-.heart {
-  width: 42px;
-  height: 42px;
-  display: inline-grid;
-  place-items: center;
-  font-size: 20px;
-  transform-origin: center;
-  animation: floaty 6s infinite;
-  opacity: 0.95;
-}
-.heart.small { width: 26px; height: 26px; font-size: 12px; animation-duration: 5s; }
-.heart.large { width: 58px; height: 58px; font-size: 28px; animation-duration: 7s; opacity: 0.85; }
-
-@keyframes floaty {
-  0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.9; }
-  50% { transform: translateY(-18px) rotate(6deg) scale(1.06); opacity: 1; }
-  100% { transform: translateY(0) rotate(-3deg) scale(1); opacity: 0.9; }
-}
-
-/* small controls */
-.controls {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  justify-content: center;
-  margin-top: 6px;
-}
-.small {
-  font-size: 0.92rem;
-  color: #444;
-}
-
-/* footer */
-.footer {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.92rem;
-  color: #555;
-  opacity: 0.9;
-  padding-top: 6px;
-}
-
-/* responsive */
-@media (max-width: 880px) {
-  .content { grid-template-columns: 1fr; padding: 6px; }
-  .right { max-width: none; }
-  .panel { height: 100vh; border-radius: 0; padding: 18px; }
-}
+    @media (max-width:880px){
+      .main{grid-template-columns:1fr;grid-auto-rows:auto}
+      .right{order:2}
+      .left{order:1}
+      #app{height:100vh;border-radius:0;padding:12px}
+    }
   </style>
 </head>
 <body>
-  <div id="app">
-    <main class="panel" role="main" aria-labelledby="greeting">
-      <div class="topbar" aria-hidden="true">
-        <div class="brand">
-          <div class="logo">♥</div>
-        </div>
-        <div class="nav-actions" aria-hidden="true">
-          <button class="icon-btn" id="prevBtn" title="Previous">◀</button>
-          <button class="icon-btn" id="nextBtn" title="Next">▶</button>
-        </div>
+  <div id="app" role="main" aria-live="polite">
+    <div class="top">
+      <div class="logo" aria-hidden="true">
+        <div class="badge">♥</div>
+        <div style="font-weight:800;color:#ff2f86">a tiny place for Feri</div>
       </div>
-      <section class="content" aria-live="polite">
-        <div class="left">
-          <div class="greeting" id="greeting">little notes for you 💌</div>
-          <div class="messages" id="messages">
-            <div class="card" id="card">
-              <p class="msg" id="line1">you make rainy days feel like summers — warm and bright.</p>
-              <p class="msg" id="line2">when you laugh, the world rearranges itself to fit that sound.</p>
-              <p class="msg" id="line3">i like the way our stories sound when we tell them together.</p>
-              <div class="cute-list" id="cuteList">
-                <div class="cute-item">you are my favorite hello and hardest goodbye.</div>
-                <div class="cute-item">i carry your smile like a favorite song.</div>
-                <div class="cute-item">with you, ordinary things become enchanted.</div>
-              </div>
+      <div style="opacity:.8;font-size:.95rem;pointer-events:none">made with sugar & starlight ✨</div>
+    </div>
+
+    <div class="main">
+      <section class="left" aria-label="Cute notes">
+        <div class="headline">Feri, some things I wanted to say...</div>
+        <div class="notes">
+          <div class="note-card" id="noteCard">
+            <p class="line" id="l1">you make rainy days feel like summers — warm and bright, Feri.</p>
+            <p class="line" id="l2">when you laugh, the world rearranges itself to fit that sound, Feri.</p>
+            <p class="line" id="l3">i like the way our stories sound when we tell them together, Feri.</p>
+            <div class="cute-grid" id="cuteGrid">
+              <div class="cute-item">you are my favorite hello and hardest goodbye, Feri.</div>
+              <div class="cute-item">i carry your smile like a favorite song, Feri.</div>
+              <div class="cute-item">with you, ordinary things become enchanted, Feri.</div>
             </div>
           </div>
         </div>
-        <aside class="right" aria-label="proposal">
-          <div class="proposal-area">
-            <div class="proposal-box" id="proposalBox" role="button" tabindex="0" aria-pressed="false">
-              🎁 Tap for a little surprise...
-            </div>
-            <div class="controls">
-              <div class="small">Tip: Press the box or press Enter</div>
-            </div>
-          </div>
-          <div class="footer">made with stars, sugar, and a little courage ✨</div>
-        </aside>
       </section>
-      <div class="decoration" aria-hidden="true">
-        <div class="heart small" style="position:absolute;left:6%;top:12%;">💗</div>
-        <div class="heart" style="position:absolute;right:8%;top:8%;">💕</div>
-        <div class="heart large" style="position:absolute;left:18%;bottom:12%;">💖</div>
-        <div class="heart" style="position:absolute;right:22%;bottom:18%;">💘</div>
-      </div>
-      <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="proposalTitle">
-        <div class="modal-card">
-          <div style="display:flex;gap:12px;align-items:center;">
-            <div style="font-size:36px;">💍</div>
-            <div>
-              <div id="proposalTitle" style="font-weight:800;font-size:1.6rem;color:#ff2f86;">a little question</div>
-              <div style="opacity:0.8;font-size:0.95rem;">this is written with a trembling hand (in the best way).</div>
+
+      <aside class="right" aria-label="Proposal area">
+        <div class="proposal">
+          <div class="box shaky" id="proposalBox" role="button" tabindex="0" aria-pressed="false">🎁 Tap for surprise</div>
+
+          <div class="pm" id="proposalPanel" aria-hidden="true">
+            <h2>Feri, will you be mine forever? 💍💖</h2>
+            <div class="btns">
+              <button class="btn yes" id="yesBtn">Yes, Forever! 💕</button>
+              <button class="btn later" id="laterBtn">Ask me later 😢</button>
             </div>
-          </div>
-          <hr style="margin:16px 0;border:none;border-top:1px solid rgba(200,100,150,0.08);" />
-          <div style="display:flex;gap:16px;flex-direction:column;align-items:center;">
-            <div style="font-size:1.25rem;color:#333;text-align:center;max-width:86%;">
-              <strong style="color:#ff2f86;">will you be mine, forever?</strong>
-            </div>
-            <div style="display:flex;gap:12px;margin-top:6px;">
-              <button class="icon-btn" id="yesBtn">Yes — forever! 💕</button>
-              <button class="icon-btn" id="noBtn">Ask me later ✨</button>
-            </div>
-            <div id="afterText" style="opacity:0.95;margin-top:8px;font-size:0.98rem;"></div>
+            <div class="dramatic" id="dramaticText" aria-live="polite"></div>
+            <div class="love-reply" id="loveReply" aria-live="polite"></div>
           </div>
         </div>
-      </div>
-    </main>
+
+        <div style="text-align:center;color:#555;font-size:.95rem">handmade with a little courage ✨</div>
+      </aside>
+    </div>
+
+    <div class="decor" id="decor"></div>
+
+    <div class="finalReveal" id="finalReveal" aria-hidden="true">
+      <div class="finalText" id="finalText">Forever Starts Now, Feri 💍✨</div>
+    </div>
   </div>
+
+  <audio id="bgAudio" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9c6b0efc71.mp3?filename=romantic-piano-112191.mp3"></audio>
+
   <script>
-(function() {
-  const lines = [
-    "you make rainy days feel like summers — warm and bright.",
-    "when you laugh, the world rearranges itself to fit that sound.",
-    "i like the way our stories sound when we tell them together.",
-    "you are my favorite hello and hardest goodbye.",
-    "i carry your smile like a favorite song.",
-    "with you, ordinary things become enchanted."
-  ];
+    (function(){
+      const lines = [
+        "you make rainy days feel like summers — warm and bright, Feri.",
+        "when you laugh, the world rearranges itself to fit that sound, Feri.",
+        "i like the way our stories sound when we tell them together, Feri.",
+        "you are my favorite hello and hardest goodbye, Feri.",
+        "i carry your smile like a favorite song, Feri.",
+        "with you, ordinary things become enchanted, Feri."
+      ];
 
-  // Carousel logic for messages
-  let idx = 0;
-  const msgEls = [document.getElementById('line1'), document.getElementById('line2'), document.getElementById('line3')];
-  const cuteList = document.getElementById('cuteList');
-  function showSlide(i) {
-    // show three sequential lines
-    for (let j = 0; j < msgEls.length; j++) {
-      const el = msgEls[j];
-      el.classList.remove('show');
-      el.style.transitionDelay = (j * 120) + 'ms';
-      void el.offsetWidth;
-      el.textContent = lines[(i + j) % lines.length];
-      setTimeout(() => el.classList.add('show'), 50 + j * 80);
-    }
-    // subtle pulse for cute items
-    const items = cuteList.querySelectorAll('.cute-item');
-    items.forEach((it, k) => {
-      it.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-6px)' }, { transform: 'translateY(0)' }], { duration: 900, delay: k*80, easing: 'ease-out' });
-    });
-  }
+      const l1 = document.getElementById('l1');
+      const l2 = document.getElementById('l2');
+      const l3 = document.getElementById('l3');
+      const cuteGrid = document.getElementById('cuteGrid');
+      const proposalBox = document.getElementById('proposalBox');
+      const proposalPanel = document.getElementById('proposalPanel');
+      const yesBtn = document.getElementById('yesBtn');
+      const laterBtn = document.getElementById('laterBtn');
+      const dramaticText = document.getElementById('dramaticText');
+      const loveReply = document.getElementById('loveReply');
+      const decor = document.getElementById('decor');
+      const finalReveal = document.getElementById('finalReveal');
+      const bgAudio = document.getElementById('bgAudio');
 
-  showSlide(idx);
+      function showLines(i = 0){
+        const els = [l1,l2,l3];
+        for(let k=0;k<els.length;k++){
+          const el = els[k];
+          el.classList.remove('show');
+          el.style.transitionDelay = (k*80)+'ms';
+          el.textContent = lines[(i+k)%lines.length];
+          setTimeout(()=>el.classList.add('show'), 80 + k*120);
+        }
+        const items = cuteGrid.querySelectorAll('.cute-item');
+        items.forEach((it, idx)=>{
+          it.animate([{transform:'translateY(0)'},{transform:'translateY(-6px)'},{transform:'translateY(0)'}],{duration:900,delay:idx*80,easing:'ease-out'});
+        });
+      }
 
-  // navigation
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  prevBtn.addEventListener('click', () => { idx = (idx - 1 + lines.length) % lines.length; showSlide(idx); });
-  nextBtn.addEventListener('click', () => { idx = (idx + 1) % lines.length; showSlide(idx); });
+      let idx=0;
+      showLines(idx);
+      let auto = setInterval(()=>{ idx=(idx+1)%lines.length; showLines(idx); },6000);
+      document.getElementById('app').addEventListener('mouseenter', ()=>clearInterval(auto));
+      document.getElementById('app').addEventListener('mouseleave', ()=>{ clearInterval(auto); auto=setInterval(()=>{ idx=(idx+1)%lines.length; showLines(idx); },6000); });
 
-  // auto-advance every 6s softly
-  let auto = setInterval(() => { idx = (idx + 1) % lines.length; showSlide(idx); }, 6000);
+      function openPanel(){
+        proposalPanel.classList.add('show');
+        proposalPanel.setAttribute('aria-hidden','false');
+        proposalBox.classList.remove('shaky');
+      }
+      proposalBox.addEventListener('click', openPanel);
+      proposalBox.addEventListener('keydown', (e)=>{ if(e.key==='Enter'||e.key===' ') openPanel(); });
 
-  // pause auto on hover
-  const panel = document.querySelector('.panel');
-  panel.addEventListener('mouseenter', () => clearInterval(auto));
-  panel.addEventListener('mouseleave', () => { clearInterval(auto); auto = setInterval(() => { idx = (idx + 1) % lines.length; showSlide(idx); }, 6000); });
+      laterBtn.addEventListener('click', ()=>{
+        dramaticText.textContent = "😭 You broke my heart... but I’ll wait 💔";
+        dramaticText.classList.add('show');
+        dramaticText.animate([{transform:'scale(1)'},{transform:'scale(1.02)'},{transform:'scale(1)'}],{duration:900});
+      });
 
-  // proposal interactions
-  const proposalBox = document.getElementById('proposalBox');
-  const modal = document.getElementById('modal');
-  const yesBtn = document.getElementById('yesBtn');
-  const noBtn = document.getElementById('noBtn');
-  const afterText = document.getElementById('afterText');
+      let heartInterval=null, sparkInterval=null, confettiInterval=null;
+      function startEndlessHearts(){ clearInterval(heartInterval); heartInterval=setInterval(spawnHeart,420);}
+      function spawnHeart(){
+        const d=document.createElement('div');d.className='heart';d.textContent=['💗','💖','💝'][Math.floor(Math.random()*3)];
+        const size=14+Math.random()*28;d.style.fontSize=size+'px';
+        d.style.left=(5+Math.random()*90)+'%';d.style.top=(60+Math.random()*30)+'%';
+        decor.appendChild(d);
+        const duration=2200+Math.random()*1800;
+        d.animate([
+          { transform: 'translateY(0) scale(0.8)', opacity:1 },
+          { transform:`translateY(${ -120 - Math.random()*160 }px) translateX(${ (Math.random()-0.5)*120 }px) scale(1.15)`, opacity:1, offset:0.6 },
+          { transform:`translateY(${ -300 - Math.random()*200 }px) scale(0.6)`, opacity:0 }
+        ],{ duration:duration, easing:'cubic-bezier(.2,.9,.3,1)'});
+        setTimeout(()=>d.remove(), duration+80);
+      }
 
-  function openModal() {
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    // little confetti hearts
-    sprinkleHearts(22);
-  }
-  function closeModal() {
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
-  }
+      function startSparks(){ clearInterval(sparkInterval); sparkInterval=setInterval(spawnSpark,360);}
+      function spawnSpark(){
+        const s=document.createElement('div');s.className='spark';s.textContent='✨';
+        const size=10+Math.random()*18;s.style.fontSize=size+'px';
+        s.style.left=(5+Math.random()*90)+'%';s.style.top=(10+Math.random()*70)+'%';
+        decor.appendChild(s);
+        const dur=1200+Math.random()*1200;
+        s.animate([{ transform:'translateY(0) scale(.6)', opacity:0.9 },{ transform:`translateY(${ -60 - Math.random()*80 }px) scale(1.2)`, opacity:0 }],{duration:dur,easing:'cubic-bezier(.2,.9,.3,1)'});
+        setTimeout(()=>s.remove(),dur+60);
+      }
 
-  proposalBox.addEventListener('click', openModal);
-  proposalBox.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') openModal(); });
+      function startConfetti(){ clearInterval(confettiInterval); confettiInterval=setInterval(spawnConfettiBurst,1400);}
+      function spawnConfettiBurst(){
+        const colors=['🎊','🎉','✨','💫','💖'];
+        for(let i=0;i<12;i++){
+          const c=document.createElement('div');c.className='confetti';
+          c.textContent=colors[Math.floor(Math.random()*colors.length)];
+          c.style.left=(40+Math.random()*20)+'%';c.style.top=(40+Math.random()*20)+'%';
+          const dur=1800+Math.random()*1200;
+          c.style.fontSize=(12+Math.random()*20)+'px';
+          decor.appendChild(c);
+          c.animate([{transform:'translateY(0) translateX(0) rotate(0deg)',opacity:1},{transform:`translateY(${160+Math.random()*240}px) translateX(${(Math.random()-0.5)*420}px) rotate(${(Math.random()-0.5)*720}deg)`,opacity:0}],{duration:dur,easing:'cubic-bezier(.25,.9,.3,1)'});
+          setTimeout(()=>c.remove(),dur+50);
+        }
+      }
 
-  yesBtn.addEventListener('click', () => {
-    afterText.textContent = "my heart just answered — yes. let's write our forever together.";
-    yesBtn.disabled = true;
-    noBtn.disabled = true;
-    // celebratory animation
-    burst(28);
-  });
+      function typeOut(element,text,speed=40,cb){ element.textContent='';element.style.display='block';element.classList.remove('show');let i=0;
+        const t=setInterval(()=>{element.textContent+=text.charAt(i)||'';i++;if(i>text.length){clearInterval(t);element.classList.add('show');if(cb)cb();}},speed);
+      }
 
-  noBtn.addEventListener('click', () => {
-    afterText.textContent = "softly noted. i'll wait with a smile 🌸";
-    noBtn.disabled = true;
-    setTimeout(closeModal, 1400);
-  });
+      yesBtn.addEventListener('click',()=>{
+        typeOut(loveReply,"💖 Love you too, Feri 💖",45);
+        loveReply.classList.add('show');
+        try{ bgAudio.currentTime=0; bgAudio.volume=0.75; const p=bgAudio.play(); if(p && p.then)p.catch(()=>{}); }catch(e){}
+        startEndlessHearts(); startSparks(); startConfetti();
+        setTimeout(()=> finalReveal.classList.add('show'),3000);
+        spawnConfettiBurst();
+      });
 
-  // keyboard accessibility: escape closes
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
-  });
-
-  // decorative heart sprinkles
-  function sprinkleHearts(n) {
-    for (let i = 0; i < n; i++) {
-      const el = document.createElement('div');
-      el.className = 'heart';
-      el.style.position = 'absolute';
-      el.style.left = (20 + Math.random()*60) + '%';
-      el.style.top = (20 + Math.random()*60) + '%';
-      el.style.fontSize = (12 + Math.random()*28) + 'px';
-      el.textContent = ['💗','💕','💝','💖'][Math.floor(Math.random()*4)];
-      document.querySelector('.decoration').appendChild(el);
-      // animate float and fade
-      el.animate([
-        { transform: 'translateY(0) scale(0.7)', opacity: 0 },
-        { transform: 'translateY(-120px) scale(1.1)', opacity: 1, offset: 0.4 },
-        { transform: 'translateY(-220px) scale(1.4)', opacity: 0 }
-      ], { duration: 1800 + Math.random()*1200, easing: 'cubic-bezier(.2,.9,.3,1)' })
-      setTimeout(()=> el.remove(), 2600);
-    }
-  }
-
-  // burst effect for yes
-  function burst(count) {
-    for (let i = 0; i < count; i++) {
-      const dot = document.createElement('div');
-      dot.className = 'heart';
-      dot.style.position = 'absolute';
-      dot.style.left = (50 + (Math.random()-0.5)*40) + '%';
-      dot.style.top = (50 + (Math.random()-0.5)*40) + '%';
-      dot.style.fontSize = (12 + Math.random()*30) + 'px';
-      dot.textContent = ['💖','💘','💝'][Math.floor(Math.random()*3)];
-      document.body.appendChild(dot);
-      const anim = dot.animate([
-        { transform: 'translateY(0) scale(0.6)', opacity: 1 },
-        { transform: `translateY(${ -120 - Math.random()*120 }px) translateX(${ (Math.random()-0.5)*220 }px) scale(1.2) rotate(${ Math.random()*60 }deg)`, opacity: 1, offset: 0.6 },
-        { transform: 'translateY(-360px) scale(0.3)', opacity: 0 }
-      ], { duration: 1600 + Math.random()*1000, easing: 'cubic-bezier(.2,.9,.3,1)' });
-      anim.onfinish = () => dot.remove();
-    }
-  }
-
-})();
+      window.addEventListener('beforeunload',()=>{ clearInterval(heartInterval); clearInterval(sparkInterval); clearInterval(confettiInterval);});
+      window.addEventListener('keydown',(e)=>{ if(e.key==='y' && proposalPanel.classList.contains('show')) yesBtn.click();});
+      laterBtn.addEventListener('dblclick',()=>{ dramaticText.classList.add('show'); dramaticText.textContent="😭 still waiting... please take care 💔";});
+      setTimeout(()=>proposalBox.classList.remove('shaky'),4200);
+      proposalBox.addEventListener('click',()=> setTimeout(()=> yesBtn.focus(),220));
+    })();
   </script>
 </body>
 </html>
-
