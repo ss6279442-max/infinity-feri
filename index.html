@@ -134,9 +134,8 @@
 </head>
 <body>
 <audio id="bgMusic" loop>
-    <source src="https://cdn.pixabay.com/download/audio/2023/09/15/audio_81f6f3c5c0.mp3?filename=romantic-violin-3.mp3" type="audio/mpeg" />
+    <source src="https://cdn.fesliyanstudios.com/play-mp3/5540" type="audio/mpeg" />
 </audio>
-
 <div class="container">
     <h1>🌹 Candlelight Love Proposal 🌹</h1>
     <p class="subtitle">A gentle question from my heart...</p>
@@ -144,13 +143,11 @@
     <button id="startBtn" onclick="startExperience()">Open My Heart 💌</button>
     <button id="musicToggle" onclick="toggleMusic()">Play Music 🎵</button>
     <div id="countdown"></div>
-
     <div id="confessionBox" class="popup">
         <h2>My Heartfelt Confession 💖</h2>
         <p id="confessionText"></p>
         <button onclick="clickedButton(showProposal)">See The Special Question</button>
     </div>
-
     <div id="proposalBox" class="popup">
         <h2>Will You Be Mine Forever? 💍</h2>
         <div class="btn-group">
@@ -164,14 +161,12 @@
         <div id="response"></div>
     </div>
 </div>
-
 <script>
 let titleInterval;
 const confession = "From the moment I met you, my world became brighter.\nI've fallen for your smile, your kindness, and your very soul.\nWould you make me the happiest person and say 'Yes' to a lifetime together?";
 let bgMusicPlaying = false;
 const bgMusic = document.getElementById('bgMusic');
 const audioClick = new Audio('https://www.soundjay.com/button/sounds/button-16.mp3');
-
 function startExperience() {
     // try starting music right away
     bgMusic.play().then(()=>{
@@ -180,7 +175,6 @@ function startExperience() {
     }).catch(()=>{
         alert("Tap 'Play Music 🎵' to start the background music!");
     });
-
     document.getElementById('startBtn').style.display='none';
     startCountdown(5);
 }
@@ -236,7 +230,6 @@ setInterval(()=>{
 function startConfetti(){for(let i=0;i<25;i++){const c=document.createElement("div"); c.classList.add("heart"); c.style.left=Math.random()*100+"vw"; c.style.bottom="50%"; c.style.fontSize=15+Math.random()*12+"px"; c.style.color=["#ff6f88","#ff1493","#ff80ab","#ff4c8b"][Math.floor(Math.random()*4)]; c.innerHTML="💖"; document.body.appendChild(c); setTimeout(()=>c.remove(),4000);}}
 function endlessLove(){setInterval(()=>{const msg=document.createElement("div"); msg.textContent="Love you too, Feri 💖"; msg.style.position="fixed"; msg.style.left=Math.random()*80+"vw"; msg.style.top="100vh"; msg.style.fontSize=(1+Math.random()*1.5)+"rem"; msg.style.color=["#e74c3c","#ff6f88","#d24d4d","#ff1493"][Math.floor(Math.random()*4)]; msg.style.fontWeight="bold"; msg.style.animation="riseUp 6s linear forwards"; document.body.appendChild(msg); setTimeout(()=>msg.remove(),6500);},1800);}
 function clickedButton(cb){audioClick.currentTime=0; audioClick.play(); cb();}
-
 // 🔄 Escape key reset (fix)
 document.addEventListener('keydown',(e)=>{
     if(e.key==="Escape"){ resetExperience(); }
