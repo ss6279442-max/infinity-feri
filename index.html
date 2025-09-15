@@ -1,391 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>💌 Someone’s waiting...</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
-        body {
-            background: radial-gradient(circle at 40% 40%, #ffd6d6 40%, #fffbe6 100%);
-            font-family: 'Segoe UI', 'Candara', sans-serif;
-            color: #442323;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            background-image: url('https://www.transparenttextures.com/patterns/floral-white.png');
-            font-size: 16px;
-        }
-        @media (max-width: 600px) {
-            body { font-size: 14px; }
-            .container {
-                width: 90%;
-                margin: 40px auto;
-                padding: 30px 15px 35px 15px;
-            }
-            h1 { font-size: 2.2rem; }
-            #countdown { font-size: 1.8rem; }
-            button { padding: 12px 28px; font-size: 1em; }
-        }
-        @media (max-width: 360px) {
-            body { font-size: 13px; }
-            h1 { font-size: 1.8rem; }
-            #countdown { font-size: 1.4rem; }
-            button { padding: 10px 22px; font-size: 0.9em; }
-            .subtitle, .love-quote { font-size: 0.95em; }
-            #noteInput { font-size: 0.9rem; padding: 8px 12px; }
-        }
-        .container {
-            max-width: 520px;
-            margin: 80px auto;
-            background: rgba(255,255,255,0.96);
-            border-radius: 20px;
-            box-shadow: 0 8px 40px #ffb1b1;
-            padding: 40px 30px 45px 30px;
-            text-align: center;
-            animation: fadeIn 1.2s ease;
-            position: relative;
-        }
-        h1 {
-            font-family: 'Great Vibes', cursive;
-            font-size: 3rem;
-            margin-bottom: 0.3em;
-        }
-        .subtitle {
-            font-size: 1.1em;
-            color: #8f4c4c;
-            margin-bottom: 36px;
-            font-style: italic;
-        }
-        .love-quote {
-            font-style: italic;
-            font-size: 1.1rem;
-            color: #ad5a5a;
-            margin-bottom: 30px;
-            border-left: 5px solid #ff8899;
-            padding-left: 15px;
-        }
-        button {
-            background: linear-gradient(90deg, #ff6f88, #ffb1b1);
-            color: #fff;
-            border: none;
-            font-size: 1.1em;
-            padding: 14px 40px;
-            margin: 15px 10px 15px 10px;
-            border-radius: 40px;
-            cursor: pointer;
-            box-shadow: 0 2px 12px #ffb1b1cc;
-            transition: transform 0.3s, background 0.3s;
-        }
-        button:hover {
-            transform: scale(1.08);
-            background: linear-gradient(90deg, #ffb1b1, #ff6f88);
-        }
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
-            background: #fffbe6;
-            box-shadow: 0 4px 32px #ffb1b1;
-            border-radius: 20px;
-            padding: 35px 30px 30px 30px;
-            z-index: 999;
-            max-width: 420px;
-            text-align: center;
-            opacity: 0;
-            animation: popupAnim 0.6s forwards;
-        }
-        .btn-group { margin: 24px 0 10px 0; }
-        #confessionText {
-            white-space: pre-wrap;
-            font-weight: 600;
-            color: #8b3a3a;
-            margin-bottom: 18px;
-            max-height: 150px;
-            overflow-y: auto;
-            user-select: text;
-        }
-        #response {
-            margin-top: 24px;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-        .yes-confetti {
-            margin-top: 16px;
-            font-size: 1.4em;
-            color: #e74c3c;
-            animation: confetti 1.2s linear forwards;
-        }
-        .no-sad {
-            margin-top: 16px;
-            font-size: 1.2em;
-            color: #847e7e;
-            animation: cryAnim 1s infinite alternate;
-        }
-        #noteInput {
-            width: 90%;
-            margin-top: 8px;
-            padding: 10px 14px;
-            font-size: 1rem;
-            border-radius: 12px;
-            border: 2px solid #ff9090;
-            resize: vertical;
-        }
-        #musicToggle {
-            background: #f77;
-            font-size: 0.9em;
-            padding: 8px 18px;
-            margin-bottom: 15px;
-            display: inline-block;
-            border-radius: 20px;
-            box-shadow: 0 2px 8px #ffb1b1cc;
-            user-select: none;
-        }
-        @keyframes fadeIn {
-            from {opacity: 0; transform: translateY(20px);}
-            to {opacity: 1; transform: translateY(0);}
-        }
-        @keyframes popupAnim {
-            to {opacity: 1; transform: translate(-50%, -50%) scale(1);}
-        }
-        @keyframes confetti {
-            0% {opacity: 0; transform: translateY(-10px);}
-            100% {opacity: 1; transform: translateY(0);}
-        }
-        @keyframes cryAnim {
-            from {transform: translateY(0);}
-            to {transform: translateY(6px);}
-        }
-        .heart {
-            position: fixed;
-            bottom: -20px;
-            font-size: 22px;
-            color: #ff6f88;
-            animation: floatUp 6s linear infinite;
-            opacity: 0.85;
-            user-select: none;
-        }
-        @keyframes floatUp {
-            from {transform: translateY(0) scale(1);}
-            to {transform: translateY(-120vh) scale(1.6);}
-        }
-        @keyframes riseUp {
-            from { transform: translateY(0); opacity: 1; }
-            to { transform: translateY(-120vh); opacity: 0; }
-        }
-        #countdown {
-            font-weight: 700;
-            font-size: 2.1rem;
-            margin: 24px 0 28px 0;
-            color: #d24d4d;
-            font-family: 'Great Vibes', cursive;
-        }
-    </style>
+<meta charset="UTF-8" />
+<title>💌 Feri is Waiting...</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+    body {
+        background: radial-gradient(circle at 40% 40%, #a0eaff 40%, #ffb6d5 100%);
+        font-family: 'Segoe UI', 'Candara', sans-serif;
+        color: #442323;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        font-size: 16px;
+    }
+    .container {
+        max-width: 520px;
+        margin: 80px auto;
+        background: rgba(255,255,255,0.96);
+        border-radius: 20px;
+        box-shadow: 0 8px 40px #ffb1b1;
+        padding: 40px 30px 45px 30px;
+        text-align: center;
+        animation: fadeIn 1.2s ease;
+        position: relative;
+    }
+    h1 {
+        font-family: 'Great Vibes', cursive;
+        font-size: 3rem;
+        margin-bottom: 0.3em;
+    }
+    .subtitle {
+        font-size: 1.2em;
+        color: #ff4c8b;
+        margin-bottom: 36px;
+        font-style: italic;
+    }
+    .love-quote {
+        font-style: italic;
+        font-size: 1.1rem;
+        color: #e75480;
+        margin-bottom: 30px;
+        border-left: 5px solid #ff80ab;
+        padding-left: 15px;
+    }
+    button {
+        background: linear-gradient(90deg, #ff6f88, #ffb1b1);
+        color: #fff;
+        border: none;
+        font-size: 1.1em;
+        padding: 14px 40px;
+        margin: 15px 10px;
+        border-radius: 40px;
+        cursor: pointer;
+        box-shadow: 0 2px 12px #ffb1b1cc;
+        transition: transform 0.3s, background 0.3s;
+        animation: bounce 1.5s infinite alternate;
+    }
+    button:hover {
+        transform: scale(1.12);
+        background: linear-gradient(90deg, #ffb1b1, #ff6f88);
+    }
+    @keyframes bounce { from {transform: translateY(0);} to {transform: translateY(-6px);} }
+    .popup {
+        display: none;
+        position: fixed;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%) scale(0.8);
+        background: #fffbe6;
+        box-shadow: 0 4px 32px #ffb1b1;
+        border-radius: 20px;
+        padding: 35px 30px;
+        z-index: 999;
+        max-width: 420px;
+        text-align: center;
+        opacity: 0;
+        animation: popupAnim 0.6s forwards;
+    }
+    .btn-group { margin: 24px 0 10px 0; }
+    #confessionText {
+        white-space: pre-wrap;
+        font-weight: 600;
+        color: #8b3a3a;
+        margin-bottom: 18px;
+        max-height: 150px;
+        overflow-y: auto;
+        user-select: text;
+    }
+    #response {
+        margin-top: 24px;
+        font-size: 1.3rem;
+        font-weight: bold;
+    }
+    .yes-confetti {
+        margin-top: 16px;
+        font-size: 1.5em;
+        color: #e74c3c;
+        animation: confetti 1.2s linear forwards;
+    }
+    .no-sad {
+        margin-top: 16px;
+        font-size: 1.2em;
+        color: #847e7e;
+        animation: cryAnim 1s infinite alternate;
+    }
+    #noteInput {
+        width: 90%;
+        margin-top: 8px;
+        padding: 10px 14px;
+        font-size: 1rem;
+        border-radius: 12px;
+        border: 2px solid #ff9090;
+        resize: vertical;
+    }
+    #musicToggle { background: #f77; font-size: 0.9em; padding: 8px 18px; margin-bottom: 15px; border-radius: 20px; }
+    @keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+    @keyframes popupAnim { to {opacity:1; transform:translate(-50%,-50%) scale(1);} }
+    @keyframes confetti { 0% {opacity:0; transform:translateY(-10px);} 100% {opacity:1; transform:translateY(0);} }
+    @keyframes cryAnim { from {transform: translateY(0);} to {transform: translateY(6px);} }
+    .heart {
+        position: fixed;
+        bottom: -20px;
+        font-size: 22px;
+        color: #ff6f88;
+        animation: floatUp 6s linear infinite;
+        opacity: 0.85;
+        user-select: none;
+    }
+    @keyframes floatUp { from {transform: translateY(0) scale(1);} to {transform: translateY(-120vh) scale(1.6);} }
+    @keyframes riseUp { from {transform: translateY(0); opacity:1;} to {transform: translateY(-120vh); opacity:0;} }
+    #countdown { font-weight:700; font-size:2.1rem; margin:24px 0; color:#d24d4d; font-family:'Great Vibes', cursive; }
+</style>
 </head>
 <body>
-    <!-- Background Music -->
-    <audio id="bgMusic" loop>
-        <source src="https://cdn.pixabay.com/download/audio/2023/09/15/audio_81f6f3c5c0.mp3?filename=romantic-violin-3.mp3" type="audio/mpeg" />
-    </audio>
+<audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2023/09/15/audio_81f6f3c5c0.mp3?filename=romantic-violin-3.mp3" type="audio/mpeg" />
+</audio>
 
-    <div class="container">
-        <h1>🌹 Candlelight Love Proposal 🌹</h1>
-        <p class="subtitle">A gentle question from my heart...</p>
-        <div class="love-quote">"Love is composed of a single soul inhabiting two bodies." – Aristotle</div>
-        <button id="startBtn" onclick="startExperience()">Open My Heart 💌</button>
-        <button id="musicToggle" onclick="toggleMusic()" aria-pressed="false" title="Play/Pause Music">Play Music 🎵</button>
-        <div id="countdown" aria-live="polite"></div>
-        <div id="confessionBox" class="popup" aria-hidden="true" role="dialog" tabindex="-1">
-            <h2>My Heartfelt Confession 💖</h2>
-            <p id="confessionText"></p>
-            <button onclick="clickedButton(showProposal)">See The Special Question</button>
-        </div>
-        <div id="proposalBox" class="popup" aria-hidden="true" role="dialog" tabindex="-1">
-            <h2>Will You Be Mine Forever? 💍</h2>
-            <div class="btn-group">
-                <button onclick="clickedButton(acceptProposal)">Yes!</button>
-                <button onclick="clickedButton(declineProposal)">No...</button>
-            </div>
-            <div>
-                <label for="noteInput">Write a note to me:</label><br />
-                <textarea id="noteInput" rows="3" placeholder="Your love note here..."></textarea>
-            </div>
-            <div id="response"></div>
-        </div>
+<div class="container">
+    <h1>🌹 Candlelight Love Proposal 🌹</h1>
+    <p class="subtitle">A gentle question from my heart...</p>
+    <div class="love-quote">"Love is composed of a single soul inhabiting two bodies." – Aristotle</div>
+    <button id="startBtn" onclick="startExperience()">Open My Heart 💌</button>
+    <button id="musicToggle" onclick="toggleMusic()">Play Music 🎵</button>
+    <div id="countdown"></div>
+
+    <div id="confessionBox" class="popup">
+        <h2>My Heartfelt Confession 💖</h2>
+        <p id="confessionText"></p>
+        <button onclick="clickedButton(showProposal)">See The Special Question</button>
     </div>
-    <script>
-        let titleInterval;
-        const confession = "From the moment I met you, my world became brighter.\nI've fallen for your smile, your kindness, and your very soul.\nWould you make me the happiest person and say 'Yes' to a lifetime together?";
-        let bgMusicPlaying = false;
-        const bgMusic = document.getElementById('bgMusic');
-        const audioClick = new Audio('https://www.soundjay.com/button/sounds/button-16.mp3');
 
-        function startExperience() {
-            playMusic();
-            document.getElementById('startBtn').style.display = 'none';
-            startCountdown(5);
-        }
-        function toggleMusic() {
-            if(bgMusicPlaying) {
-                bgMusic.pause();
-                document.getElementById('musicToggle').textContent = 'Play Music 🎵';
-                document.getElementById('musicToggle').setAttribute('aria-pressed', 'false');
-                bgMusicPlaying = false;
-            } else {
-                playMusic();
-            }
-            playClickSound();
-        }
-        function playMusic() {
-            bgMusic.play();
-            document.getElementById('musicToggle').textContent = 'Pause Music ⏸️';
-            document.getElementById('musicToggle').setAttribute('aria-pressed', 'true');
-            bgMusicPlaying = true;
-        }
-        function playClickSound() {
-            audioClick.currentTime = 0;
-            audioClick.play();
-        }
-        function startCountdown(seconds) {
-            const countdownElem = document.getElementById('countdown');
-            countdownElem.textContent = `Prepare yourself... ${seconds}`;
-            let current = seconds;
-            const timer = setInterval(() => {
-                current--;
-                if (current > 0) {
-                    countdownElem.textContent = `Prepare yourself... ${current}`;
-                } else {
-                    clearInterval(timer);
-                    countdownElem.textContent = "";
-                    showConfession();
-                }
-            }, 1000);
-        }
-        function showConfession() {
-            const confessionBox = document.getElementById('confessionBox');
-            confessionBox.style.display = 'block';
-            confessionBox.setAttribute('aria-hidden', 'false');
-            confessionBox.focus();
-            typeWriter(confession, "confessionText");
-        }
-        function typeWriter(text, elementId) {
-            let i = 0;
-            const speed = 40;
-            const element = document.getElementById(elementId);
-            element.textContent = "";
-            function typing() {
-                if (i < text.length) {
-                    element.textContent += text.charAt(i);
-                    element.scrollTop = element.scrollHeight;
-                    i++;
-                    setTimeout(typing, speed);
-                }
-            }
-            typing();
-        }
-        function showProposal() {
-            const confessionBox = document.getElementById('confessionBox');
-            confessionBox.style.display = 'none';
-            confessionBox.setAttribute('aria-hidden', 'true');
-            const proposalBox = document.getElementById('proposalBox');
-            proposalBox.style.display = 'block';
-            proposalBox.setAttribute('aria-hidden', 'false');
-            proposalBox.querySelector('#noteInput').focus();
-        }
-        function acceptProposal() {
-            const note = document.getElementById('noteInput').value.trim();
-            document.getElementById('response').innerHTML =
-                `<p class='yes-confetti'>Yay! You said Yes! 💖💯<br>Let our beautiful journey begin!</p>` +
-                (note ? `<p><em>You wrote: "${note}"</em></p>` : "");
-            startConfetti();
-            endlessLove();
-            changeTitle("💖 Happily Ever After!");
-        }
-        function declineProposal() {
-            document.getElementById('response').innerHTML =
-                "<p class='no-sad'>😭 Oh no! But my love for you will always shine...</p>";
-            changeTitle("💔 Broken but loving...");
-        }
-        function changeTitle(msg) {
-            clearInterval(titleInterval);
-            let original = document.title;
-            let i = false;
-            titleInterval = setInterval(() => {
-                document.title = i ? original : msg;
-                i = !i;
-            }, 1200);
-        }
-        let heartInterval = setInterval(() => {
-            const heart = document.createElement("div");
-            heart.classList.add("heart");
-            heart.style.left = Math.random() * 100 + "vw";
-            heart.style.animationDuration = (4 + Math.random() * 4) + "s";
-            heart.innerHTML = "❤️";
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 7000);
-        }, 900);
-        function startConfetti() {
-            for (let i = 0; i < 20; i++) {
-                const conf = document.createElement("div");
-                conf.classList.add("heart");
-                conf.style.left = Math.random() * 100 + "vw";
-                conf.style.bottom = "50%";
-                conf.style.fontSize = "18px";
-                conf.innerHTML = "💖";
-                document.body.appendChild(conf);
-                setTimeout(() => conf.remove(), 4000);
-            }
-        }
-        function endlessLove() {
-            setInterval(() => {
-                const msg = document.createElement("div");
-                msg.textContent = "Love you too, Feri 💖";
-                msg.style.position = "fixed";
-                msg.style.left = Math.random() * 80 + "vw";
-                msg.style.top = "100vh";
-                msg.style.fontSize = (1 + Math.random()*1.5) + "rem";
-                msg.style.color = ["#e74c3c","#ff6f88","#d24d4d","#ff1493"][Math.floor(Math.random()*4)];
-                msg.style.fontWeight = "bold";
-                msg.style.animation = "riseUp 6s linear forwards";
-                document.body.appendChild(msg);
-                setTimeout(() => msg.remove(), 6500);
-            }, 2000);
-        }
-        function clickedButton(callback) {
-            playClickSound();
-            callback();
-        }
-        document.addEventListener('keydown', (event) => {
-            if(event.key === "Escape"){
-                let confessionBox = document.getElementById('confessionBox');
-                let proposalBox = document.getElementById('proposalBox');
-                if(confessionBox.style.display === 'block'){
-                    confessionBox.style.display = 'none';
-                    confessionBox.setAttribute('aria-hidden', 'true');
-                    resetExperience();
-                }
-                if(proposalBox.style.display === 'block'){
-                    proposalBox.style.display = 'none';
-                    proposalBox.setAttribute('aria-hidden', 'true');
-                    resetExperience();
-                }
-            }
-        });
-        function resetExperience(){
-            clearInterval(titleInterval);
-            document.title = `💌 Someone’s waiting... (${new Date().toLocaleDateString()})`;
-            document.getElementById('startBtn').style.display = 'inline-block';
-            document.getElementById('musicToggle').textContent = 'Play Music 🎵';
-            document.getElementById('musicToggle').setAttribute('aria-pressed', 'false');
-            bgMusic.pause();
-            bgMusic.currentTime = 0;
-            document.getElementById('countdown').textContent = "";
-            document.getElementById('confessionText').textContent = "";
-            document.getElementById('response').textContent = "";
-            document.getElementById('noteInput').value = "";
-            bgMusicPlaying = false;
-        }
-        document.title = `💌 Someone’s waiting... (${new Date().toLocaleDateString()})`;
-    </script>
+    <div id="proposalBox" class="popup">
+        <h2>Will You Be Mine Forever? 💍</h2>
+        <div class="btn-group">
+            <button onclick="clickedButton(acceptProposal)">Yes!</button>
+            <button onclick="clickedButton(declineProposal)">No...</button>
+        </div>
+        <div>
+            <label for="noteInput">Write a note to me:</label><br>
+            <textarea id="noteInput" rows="3" placeholder="Your love note here..."></textarea>
+        </div>
+        <div id="response"></div>
+    </div>
+</div>
+
+<script>
+let titleInterval;
+const confession = "From the moment I met you, my world became brighter.\nI've fallen for your smile, your kindness, and your very soul.\nWould you make me the happiest person and say 'Yes' to a lifetime together?";
+let bgMusicPlaying = false;
+const bgMusic = document.getElementById('bgMusic');
+const audioClick = new Audio('https://www.soundjay.com/button/sounds/button-16.mp3');
+
+function startExperience() {
+    playMusic();
+    document.getElementById('startBtn').style.display='none';
+    startCountdown(5);
+}
+function toggleMusic() { bgMusicPlaying?bgMusic.pause(), document.getElementById('musicToggle').textContent='Play Music 🎵', bgMusicPlaying=false : playMusic(); audioClick.currentTime=0; audioClick.play(); }
+function playMusic() { bgMusic.play(); document.getElementById('musicToggle').textContent='Pause Music ⏸️'; bgMusicPlaying=true; }
+function startCountdown(seconds){
+    const countdownElem = document.getElementById('countdown');
+    let current = seconds;
+    countdownElem.textContent = `Prepare yourself... ${current}`;
+    const timer = setInterval(()=>{
+        current--;
+        if(current>0) countdownElem.textContent=`Prepare yourself... ${current}`;
+        else { clearInterval(timer); countdownElem.textContent=''; showConfession(); }
+    },1000);
+}
+function showConfession() {
+    const box=document.getElementById('confessionBox');
+    box.style.display='block';
+    typeWriter(confession,'confessionText');
+}
+function typeWriter(text,id){let i=0; const el=document.getElementById(id); el.textContent=''; function t(){i<text.length?(el.textContent+=text.charAt(i),el.scrollTop=el.scrollHeight,i++,setTimeout(t,40)):0;} t();}
+function showProposal(){document.getElementById('confessionBox').style.display='none'; const box=document.getElementById('proposalBox'); box.style.display='block'; box.querySelector('#noteInput').focus();}
+function acceptProposal(){
+    const note=document.getElementById('noteInput').value.trim();
+    document.getElementById('response').innerHTML=`<p class='yes-confetti'>Yay! You said Yes! 💖💯</p>`+(note?`<p><em>You wrote: "${note}"</em></p>`:'');
+    startConfetti(); endlessLove(); changeTitle("💖 Happily Ever After!");
+}
+function declineProposal(){
+    document.getElementById('response').innerHTML="<p class='no-sad'>😭 Oh no! But my love for you will always shine...</p>";
+    changeTitle("💔 Broken but loving...");
+}
+function changeTitle(msg){clearInterval(titleInterval); let original=document.title; let i=false; titleInterval=setInterval(()=>{document.title=i?original:msg;i=!i;},1200);}
+setInterval(()=>{
+    const heart=document.createElement("div");
+    heart.classList.add("heart");
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.animationDuration=(4+Math.random()*4)+"s";
+    heart.innerHTML="❤️";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),7000);
+},800);
+function startConfetti(){for(let i=0;i<25;i++){const c=document.createElement("div"); c.classList.add("heart"); c.style.left=Math.random()*100+"vw"; c.style.bottom="50%"; c.style.fontSize=15+Math.random()*12+"px"; c.style.color=["#ff6f88","#ff1493","#ff80ab","#ff4c8b"][Math.floor(Math.random()*4)]; c.innerHTML="💖"; document.body.appendChild(c); setTimeout(()=>c.remove(),4000);}}
+function endlessLove(){setInterval(()=>{const msg=document.createElement("div"); msg.textContent="Love you too, Feri 💖"; msg.style.position="fixed"; msg.style.left=Math.random()*80+"vw"; msg.style.top="100vh"; msg.style.fontSize=(1+Math.random()*1.5)+"rem"; msg.style.color=["#e74c3c","#ff6f88","#d24d4d","#ff1493"][Math.floor(Math.random()*4)]; msg.style.fontWeight="bold"; msg.style.animation="riseUp 6s linear forwards"; document.body.appendChild(msg); setTimeout(()=>msg.remove(),6500);},1800);}
+function clickedButton(cb){audioClick.currentTime=0; audioClick.play(); cb();}
+document.addEventListener('keydown',(e)=>{if(e.key==="Escape"){['confessionBox','proposalBox'].forEach(id=>{const box=document.getElementById(id); if(box.style.display==='block'){box.style.display='none'; resetExperience();}});}});
+function resetExperience(){
+    clearInterval(titleInterval);
+    document.title=`💌 Feri is Waiting... (${new Date().toLocaleDateString()})`;
+    document.getElementById('startBtn').style.display='inline-block';
+    document.getElementById('musicToggle').textContent='Play Music 🎵';
+    bgMusic.pause(); bgMusic.currentTime=0; document.getElementById('countdown').textContent=''; document.getElementById('confessionText').textContent=''; document.getElementById('response').textContent=''; document.getElementById('noteInput').value=''; bgMusicPlaying=false;
+}
+document.title=`💌 Feri is Waiting... (${new Date().toLocaleDateString()})`;
+</script>
 </body>
 </html>
