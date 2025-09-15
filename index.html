@@ -173,32 +173,30 @@ const bgMusic = document.getElementById('bgMusic');
 const audioClick = new Audio('https://www.soundjay.com/button/sounds/button-16.mp3');
 
 function startExperience() {
-    // Start only after user interaction
-    playMusic();
+    // try starting music right away
+    bgMusic.play().then(()=>{
+        bgMusicPlaying = true;
+        document.getElementById('musicToggle').textContent='Pause Music ⏸️';
+    }).catch(()=>{
+        alert("Tap 'Play Music 🎵' to start the background music!");
+    });
+
     document.getElementById('startBtn').style.display='none';
     startCountdown(5);
 }
-
-function toggleMusic() { 
+function toggleMusic() {
     if(bgMusicPlaying){
         bgMusic.pause();
         document.getElementById('musicToggle').textContent='Play Music 🎵';
         bgMusicPlaying=false;
     } else {
-        playMusic();
+        bgMusic.play().then(()=>{
+            document.getElementById('musicToggle').textContent='Pause Music ⏸️';
+            bgMusicPlaying=true;
+        }).catch(()=>alert("Music blocked! Please tap again."));
     }
     audioClick.currentTime=0; audioClick.play();
 }
-
-function playMusic() { 
-    bgMusic.play().then(()=>{
-        document.getElementById('musicToggle').textContent='Pause Music ⏸️';
-        bgMusicPlaying=true;
-    }).catch(err=>{
-        console.log("Autoplay blocked, waiting for user click:", err);
-    });
-}
-
 function startCountdown(seconds){
     const countdownElem = document.getElementById('countdown');
     let current = seconds;
@@ -209,30 +207,23 @@ function startCountdown(seconds){
         else { clearInterval(timer); countdownElem.textContent=''; showConfession(); }
     },1000);
 }
-
 function showConfession() {
     const box=document.getElementById('confessionBox');
     box.style.display='block';
     typeWriter(confession,'confessionText');
 }
-
 function typeWriter(text,id){let i=0; const el=document.getElementById(id); el.textContent=''; function t(){i<text.length?(el.textContent+=text.charAt(i),el.scrollTop=el.scrollHeight,i++,setTimeout(t,40)):0;} t();}
-
 function showProposal(){document.getElementById('confessionBox').style.display='none'; const box=document.getElementById('proposalBox'); box.style.display='block'; box.querySelector('#noteInput').focus();}
-
 function acceptProposal(){
     const note=document.getElementById('noteInput').value.trim();
     document.getElementById('response').innerHTML=`<p class='yes-confetti'>Yay! You said Yes! 💖💯</p>`+(note?`<p><em>You wrote: "${note}"</em></p>`:'');
     startConfetti(); endlessLove(); changeTitle("💖 Happily Ever After!");
 }
-
 function declineProposal(){
     document.getElementById('response').innerHTML="<p class='no-sad'>😭 Oh no! But my love for you will always shine...</p>";
     changeTitle("💔 Broken but loving...");
 }
-
 function changeTitle(msg){clearInterval(titleInterval); let original=document.title; let i=false; titleInterval=setInterval(()=>{document.title=i?original:msg;i=!i;},1200);}
-
 setInterval(()=>{
     const heart=document.createElement("div");
     heart.classList.add("heart");
@@ -242,13 +233,27 @@ setInterval(()=>{
     document.body.appendChild(heart);
     setTimeout(()=>heart.remove(),7000);
 },800);
-
 function startConfetti(){for(let i=0;i<25;i++){const c=document.createElement("div"); c.classList.add("heart"); c.style.left=Math.random()*100+"vw"; c.style.bottom="50%"; c.style.fontSize=15+Math.random()*12+"px"; c.style.color=["#ff6f88","#ff1493","#ff80ab","#ff4c8b"][Math.floor(Math.random()*4)]; c.innerHTML="💖"; document.body.appendChild(c); setTimeout(()=>c.remove(),4000);}}
-
 function endlessLove(){setInterval(()=>{const msg=document.createElement("div"); msg.textContent="Love you too, Feri 💖"; msg.style.position="fixed"; msg.style.left=Math.random()*80+"vw"; msg.style.top="100vh"; msg.style.fontSize=(1+Math.random()*1.5)+"rem"; msg.style.color=["#e74c3c","#ff6f88","#d24d4d","#ff1493"][Math.floor(Math.random()*4)]; msg.style.fontWeight="bold"; msg.style.animation="riseUp 6s linear forwards"; document.body.appendChild(msg); setTimeout(()=>msg.remove(),6500);},1800);}
-
 function clickedButton(cb){audioClick.currentTime=0; audioClick.play(); cb();}
 
+// 🔄 Escape key reset (fix)
+document.addEventListener('keydown',(e)=>{
+    if(e.key==="Escape"){ resetExperience(); }
+});
+function resetExperience(){
+    clearInterval(titleInterval);
+    document.title=`💌 Feri is Waiting... (${new Date().toLocaleDateString()})`;
+    document.getElementById('startBtn').style.display='inline-block';
+    document.getElementById('musicToggle').textContent='Play Music 🎵';
+    bgMusic.pause(); bgMusic.currentTime=0; bgMusicPlaying=false;
+    document.getElementById('countdown').textContent='';
+    document.getElementById('confessionText').textContent='';
+    document.getElementById('response').textContent='';
+    document.getElementById('noteInput').value='';
+    document.getElementById('confessionBox').style.display='none';
+    document.getElementById('proposalBox').style.display='none';
+}
 document.title=`💌 Feri is Waiting... (${new Date().toLocaleDateString()})`;
 </script>
 </body>
